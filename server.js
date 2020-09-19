@@ -43,7 +43,8 @@ app.use(session({
 }));
 
 app.use(cors({
-  origin: 'http://localhost:3000'
+  origin: 'http://localhost:3000',
+  credentials: true
 }));
 app.use(express.json());
 
@@ -127,17 +128,20 @@ app.post('/login', (req, res, next) => {
   passport.authenticate('local', (err, user, info) => {
     if(err) throw err;
     if(!user) return res.send({ message: 'No user exists' });
-    req.logIn(user, err => {
+    req.login(user, err => {
       if(err) throw err;
-      res.send({ message: 'Successfully authenticated' });
+      res.send({
+        message: 'Successfully authenticated',
+        user: req.user
+      });
       console.log(req.user);
-    })
+    });
   })(req, res, next);
 });
 
 app.get('/get-user', (req, res, next) => {
   console.log(req.user);
-  res.send({ user: req.user.username });
+  res.send({ user: req.user });
 });
 
 

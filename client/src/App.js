@@ -9,51 +9,59 @@ import {
   Link
 } from 'react-router-dom';
 */
+import Axios from 'axios';
+import Page from './Components/Page.js';
 
 const url = 'http://localhost:4500';
+
+// this needs to be an api call to get the current user if any, so that the user can persist if page is refreshed
+const currentUser = { username: 'Nobody logged in' };
 
 const App = () => {
   const [registerUsername, setRegisterUsername] = useState('');
   const [registerPassword, setRegisterPassword] = useState('');
   const [loginUsername, setLoginUsername] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
+  const [user, setUser] = useState(currentUser);
 
   const register = () => {
-    fetch(`${url}/register`, {
+    Axios({
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
+      data: {
         username: registerUsername,
         password: registerPassword
-      })
+      },
+      withCredentials: true,
+      url: `${url}/register`
     })
-      .then(res => res.json())
-      .then(data => console.log(data))
-      .catch(e => console.log(e));
+      .then(res => console.log(res));
   };
 
   const login = () => {
-    fetch(`${url}/login`, {
+    Axios({
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
+      data: {
         username: loginUsername,
         password: loginPassword
-      })
+      },
+      withCredentials: true,
+      url: `${url}/login`
     })
-      .then(res => res.json())
-      .then(data => console.log(data))
-      .catch(e => console.log(e));
+      .then(res => {
+        console.log(res);
+        setUser(res.data.user);
+      });
   };
 
   const getUser = () => {
-    fetch(`${url}/get-user`)
-    .then(res => res.json())
-    .then(data => {
-      console.log(data);
-      document.getElementById('user').innerText = data.user;
+    Axios({
+      method: 'GET',
+      withCredentials: true,
+      url: `${url}/get-user`
     })
-    .catch(e => console.log(e));
+      .then(res => {
+        console.log(res.data)
+      })
   };
 
   return (
@@ -71,6 +79,8 @@ const App = () => {
       <h2>Get logged in user</h2>
       <button onClick={getUser}>Get User</button>
       <div id="user"></div>
+
+      <Page user={user} />
     </div>
   )
 };
