@@ -1,135 +1,119 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './App.css';
 import Axios from 'axios';
-import Home from './Pages/Home.js';
-import Page1 from './Pages/Page1.js';
-import Page2 from './Pages/Page2.js';
+
+import Navbar from './Components/Navbar';
+import AuthForm from './Components/Auth/AuthForm';
+import Content from './Components/Content/Content';
 
 
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from 'react-router-dom';
-
-const url = 'http://localhost:4500';
-
-
-const App = () => {
-  const [registerUsername, setRegisterUsername] = useState('');
-  const [registerPassword, setRegisterPassword] = useState('');
-  const [loginUsername, setLoginUsername] = useState('');
-  const [loginPassword, setLoginPassword] = useState('');
-  const [user, setUser] = useState({ username: 'Nobody logged in' });
-  const [isLoading, setIsLoading] = useState(true);
-
-  const register = () => {
-    Axios({
-      method: 'POST',
-      data: {
-        username: registerUsername,
-        password: registerPassword
-      },
-      withCredentials: true,
-      url: `${url}/register`
-    })
-      .then(res => console.log(res));
-  };
-
-  const login = () => {
-    Axios({
-      method: 'POST',
-      data: {
-        username: loginUsername,
-        password: loginPassword
-      },
-      withCredentials: true,
-      url: `${url}/login`
-    })
-      .then(res => {
-        console.log(res);
-        if(res.data.user) {
-          setUser(res.data.user);
-        }
-      });
-  };
-
-  const logout = () => {
-    Axios({
-      method: 'GET',
-      withCredentials: true,
-      url: `${url}/logout`
-    })
-      .then(res => {
-        console.log(res.data);
-        setUser({ username: 'Nobody logged in' });
-      })
-  };
-
-  useEffect(() => {
-    Axios({
-      method: 'GET',
-      withCredentials: true,
-      url: `${url}/get-user`
-    })
-      .then(res => {
-        console.log(res.data);
-        if(res.data.user) {
-          setUser(res.data.user);
-        } else {
-          setUser({ username: 'Nobody logged in' });
-        }
-        setIsLoading(false);
-      })
-  }, []);
-
-  if(isLoading) {
-    return <div>Loading...</div>
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      loading: true,
+      user: null,
+      form: 'login'
+    };
+    this.login = this.login.bind(this);
+    this.register = this.register.bind(this);
+    this.logout = this.logout.bind(this);
+    this.toggleAuth = this.toggleAuth.bind(this);
   }
 
-  return (
-    <Router>
-      <div>
-        <header>
-          <h1>Workout Planner</h1>
-          <nav>
-            <ul>
-              <li>
-                <Link to="/">Home</Link>
-              </li>
-              <li>
-                <Link to="/page1">Page 1</Link>
-              </li>
-              <li>
-                <Link to="/page2">Page 2</Link>
-              </li>
-            </ul>
-          </nav>
-        </header>
+  componentDidMount() {
+    Axios({
+      method: 'GET',
+      withCredentials: true,
+      url: `http://localhost:4500/get-user`
+    })
+      .then(res => {
+        console.log(res.data)
+        if(res.data.user) {
+          this.setState({
+            user: res.data.user
+          })
+        }
+        this.setState({ loading: false });
+      })
+  }
 
-        <Switch>
-          <Route exact path="/">
-            <Home 
-              handleLogin={login}
-              updateLoginUsername={setLoginUsername}
-              updateLoginPassword={setLoginPassword}
-              handleRegister={register}
-              updateRegisterUsername={setRegisterUsername}
-              updateRegisterPassword={setRegisterPassword}
-              handleLogout={logout}
-              user={user} />
-          </Route>
-          <Route exact path="/page1">
-            <Page1 />
-          </Route>
-          <Route exact path="/page2">
-            <Page2 />
-          </Route>
-        </Switch>
+  login(username, password) {
+    Axios({
+      method: 'post',
+      url: 'http://localhost:4500/login',
+      withCredentials: true,
+      data: {
+        username,
+        password
+      },
+      headers: {'Content-Type': 'application/json' }
+      })
+      .then(res => {
+        console.log(res.data)
+        if(res.data.user) {
+          this.setState({ user: res.data.user });
+        }
+      })
+  }
+
+  register(username, password) {
+    Axios({
+      method: 'post',
+      url: 'http://localhost:4500/register',
+      withCredentials: true,
+      data: {
+        username,
+        password
+      },
+      headers: {'Content-Type': 'application/json' }
+      })
+      .then(res => {
+        console.log(res.data)
+        if(res.data.message === 'New user created') {
+          this.setState({ form: 'login' });
+        }
+      })
+  }
+
+  logout() {
+    Axios({
+      method: 'GET',
+      withCredentials: true,
+      url: `http://localhost:4500/logout`
+    })
+      .then(res => {
+        console.log(res.data)
+        if(res.data.message === 'Successfully logged out') {
+          this.setState({ user: null });
+        }
+      })
+  }
+
+  toggleAuth() {
+    this.state.form === 'login' ? this.setState({ form: 'register' }) : this.setState({ form: 'login' });
+  }
+
+  render() {
+    let content;
+    if(this.state.loading) {
+      content = <div>Loading...</div>
+    } else if(this.state.user) {
+      content = <Content user={this.state.user} />;
+    } else {
+      content = <AuthForm
+        form={this.state.form}
+        toggleAuth={this.toggleAuth}
+        login={this.login}
+        register={this.register} />;
+    }
+    return (
+      <div className="app">
+        <Navbar user={this.state.user} logout={this.logout} />
+        {content}
       </div>
-    </Router>
-  )
+    )
+  }
 };
 
 export default App;

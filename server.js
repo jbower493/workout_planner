@@ -110,6 +110,40 @@ app.post('/new-exercise', (req, res, next) => {
 });
 */
 
+app.post('/new-exercise', (req, res, next) => {
+  const pressUps = new Exercise({
+    name: req.body.name,
+    description: req.body.description,
+    muscleGroup: req.body.muscleGroup,
+    owner: req.user.id
+  });
+
+  pressUps.save()
+    .then(doc => {
+      console.log(doc)
+      res.send({ success: true });
+    })
+    .catch(e => res.send({ success: false }));
+});
+
+app.post('/new-workout', (req, res, next) => {
+  const currentUser = req.user;
+
+  const workout = new Workout({
+    name: req.body.name,
+    duration: req.body.duration,
+    type: req.body.type
+  });
+
+  currentUser.workouts.push(workout);
+  currentUser.save()
+    .then(doc => {
+      console.log(doc)
+      res.send({ success: true });
+    })
+    .catch(e => res.send({ success: false }));
+});
+
 app.post('/register', (req, res, next) => {
   User.findOne({ username: req.body.username }, async (err, doc) => {
     if(err) throw err;
@@ -139,7 +173,20 @@ app.post('/login', (req, res, next) => {
   })(req, res, next);
 });
 
+app.get('/logout', (req, res, next) => {
+  if(req.user) {
+    req.logout();
+    console.log(req.user);
+    res.send({ message: 'Successfully logged out' });
+  } else {
+    res.send({ message: 'Couldn\'t logout, no logged in user' });
+  }
+});
+
 app.get('/get-user', (req, res, next) => {
+  if(!req.user) {
+    return res.send({ message: 'No user logged in' })
+  }
   console.log(req.user);
   res.send({ user: req.user });
 });

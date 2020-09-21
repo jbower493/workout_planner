@@ -2,4 +2,115 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  font-family: 'Arial';
+}
+
+html {
+  font-size: 16px;
+}
+
+:root {
+  --clr-primary:  rgb(214, 42, 42);
+}
+
+header {
+  text-align: center;
+  padding: 20px 50px;
+  background-color: var(--clr-primary);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.auth-form {
+  width: 300px;
+  margin: 100px auto;
+}
+
+.auth-form h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+input {
+  width: 100%;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid grey;
+  margin-bottom: 20px;
+  font-size: 1rem;
+}
+
+input:focus {
+  outline: none;
+  border: 1px solid dodgerblue;
+}
+
+button {
+  border-radius: 5px;
+  background-color:var(--clr-primary);
+  color: white;
+  padding: 5px 20px;
+  border: none;
+  width: 100%;
+  text-align: center;
+  cursor: pointer;
+  margin-bottom: 20px;
+  font-size: 1rem;
+}
+
+button:focus {
+  outline: none;
+}
+
+.toggle-auth {
+  color: var(--clr-primary);
+  cursor: pointer;
+}
+
+.button-holder {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  margin: 30px 0;
+}
+
+.add-button {
+  border-radius: 5px;
+  background-color:var(--clr-primary);
+  color: white;
+  padding: 5px 20px;
+  border: none;
+  text-align: center;
+  cursor: pointer;
+  margin: 0 20px;
+  font-size: 1rem;
+}
+
+.page-cover {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+}
+
+.new-exercise-modal, .new-workout-modal {
+  width: 400px;
+  height: fit-content;
+  background-color: lightgray;
+  z-index: 2;
+  padding: 0 20px;
+}
+
+.page-cover h3 {
+  margin: 20px 0;
+  text-align: center;
 }
