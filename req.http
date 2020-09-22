@@ -1,1 +1,1 @@
-GET http://localhost:4500/stupid HTTP/1.1
+DELETE http://localhost:4500/workout-exercise/5f6996a25f223e1774974afe HTTP/1.1

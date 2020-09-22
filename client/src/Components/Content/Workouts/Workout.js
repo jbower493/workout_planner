@@ -10,6 +10,10 @@ const Workout = (props) => {
     props.deleteWorkout(props.workout);
   };
 
+  const removeWorkoutExercise = (workoutId, workoutExerciseId) => {
+    props.removeWorkoutExercise(workoutId, workoutExerciseId);
+  };
+
   return (
     <div className="workout">
       <div className="workout-title">
@@ -21,7 +25,11 @@ const Workout = (props) => {
       </div>
       <div className="workout-exercises">
         {
-          props.workout.exercises.map(exercise => <WorkoutExercise key={props.workout.exercises.indexOf(exercise)} exercise={exercise} />)
+          props.workout.exercises.map(exercise => <WorkoutExercise
+            key={props.workout.exercises.indexOf(exercise)}
+            exercise={exercise}
+            workoutId={props.workout._id}
+            removeWorkoutExercise={removeWorkoutExercise} />)
         }
       </div>
     </div>

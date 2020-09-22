@@ -8,9 +8,9 @@ const passport = require('passport');
 const localStrategy = require('passport-local').Strategy;
 
 const Exercise = require('./models/Exercise.js');
+const WorkoutExercise = require('./models/WorkoutExercise');
 const Workout = require('./models/Workout.js');
 const User = require('./models/User.js');
-//const Shoe = require('./models/Shoe.js')
 
 const app = express();
 
@@ -52,63 +52,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 require('./config/passportConfig.js')(passport);
 
-
-/*
-app.get('/new-user', async (req, res, next) => {
-  const terry = new User({
-    _id: new mongoose.Types.ObjectId(),
-    username: 'Terry',
-    password: 'password1'
-  });
-
-  const bigArms = new Workout({
-    _id: new mongoose.Types.ObjectId(),
-    name: 'Big Arms',
-    duration: 60,
-    type: 'Upper body'
-  });
-
-  const pressUps = new Exercise({
-    _id: new mongoose.Types.ObjectId(),
-    name: 'Press ups',
-    description: 'Lay on the ground belly down, place your hands underneath your shoulders and push your body up until arms are fully extended.',
-    muscleGroup: 'Chest',
-    owner: terry._id
-  });
-
-  const newExercise = await pressUps.save();
-
-  const newWorkoutExercise = {
-    exercise: pressUps._id,
-    reps: 10,
-    sets: 3,
-    weight: 'body weight'
-  }
-
-  bigArms.exercises.push(newWorkoutExercise);
-  terry.workouts.push(bigArms);
-
-  const newUser = await terry.save();
-  console.log(newUser)
-
-  res.send('yes');
-});
-
-app.get('/terry', async (req, res, next) => {
-  const terry = await User.findOne({ username: "Terry" }).populate({
-    path: 'workouts.exercises.exercise',
-    model: 'Exercise'
-  });
-
-  console.log(terry.workouts);
-  res.send('Yo');
-});
-
-app.post('/new-exercise', (req, res, next) => {
-  console.log(req.body);
-  res.send({message: 'Boom baby'});
-});
-*/
 
 app.post('/new-exercise', (req, res, next) => {
   const pressUps = new Exercise({
@@ -170,8 +113,10 @@ app.get('/get-exercises', (req, res, next) => {
 app.post('/add-to-workout/:workoutId', (req, res, next) => {
   // get the workout to be added to
   const currentWorkout = req.user.workouts.find(workout => workout._id == req.params.workoutId);
+  // create a new workout exercise
+  const nWE = new WorkoutExercise(req.body);
   // push the new exercise onto that workout's exercises array
-  currentWorkout.exercises.push(req.body);
+  currentWorkout.exercises.push(nWE);
   // get the index in the users workouts array of the current workout
   const index = req.user.workouts.indexOf(currentWorkout);
   // get a copy of the workouts array for the logged in user
@@ -198,6 +143,21 @@ app.delete('/workout/:workoutId', (req, res, next) => {
   workoutsArr.splice(index, 1);
   // update user, set workouts as updated workouts array
   User.findByIdAndUpdate(req.user.id, { workouts: workoutsArr })
+    .then(doc => {
+      res.send({ success: true });
+      console.log(doc)
+    })
+    .catch(e => res.send({ success: false }))
+});
+
+app.delete('/workout-exercise/:workoutExerciseId/:workoutId', (req, res, next) => {
+  const workouts = req.user.workouts;
+  const workout = workouts.find(item => item._id == req.params.workoutId);
+  const workoutIndex = workouts.indexOf(workout);
+  const workoutExercise = workout.exercises.find(item => item._id == req.params.workoutExerciseId);
+  const exerciseIndex = workout.exercises.indexOf(workoutExercise);
+  workouts[workoutIndex].exercises.splice(exerciseIndex, 1);
+  User.findByIdAndUpdate(req.user.id, { workouts })
     .then(doc => {
       res.send({ success: true });
       console.log(doc)

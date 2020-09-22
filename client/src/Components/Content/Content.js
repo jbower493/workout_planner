@@ -24,6 +24,7 @@ class Content extends React.Component {
     this.saveNewWorkout = this.saveNewWorkout.bind(this);
     this.addToWorkout = this.addToWorkout.bind(this);
     this.deleteWorkout = this.deleteWorkout.bind(this);
+    this.removeWorkoutExercise = this.removeWorkoutExercise.bind(this);
   }
 
   resetState() {
@@ -141,6 +142,19 @@ class Content extends React.Component {
       })
   }
 
+  removeWorkoutExercise(workoutId, workoutExerciseId) {
+    Axios({
+      method: 'DELETE',
+      url: `http://localhost:4500/workout-exercise/${workoutExerciseId}/${workoutId}`,
+      withCredentials: true
+    })
+      .then(res => {
+        if(res.data.success) {
+          this.resetState();
+        }
+      })
+  }
+
   render() {
     let modal = null;
     if(this.state.modal === 'new exercise') {
@@ -158,7 +172,8 @@ class Content extends React.Component {
           workouts={this.state.workouts}
           user={this.props.user}
           showAddToWorkout={this.showAddToWorkout}
-          deleteWorkout={this.deleteWorkout} />
+          deleteWorkout={this.deleteWorkout}
+          removeWorkoutExercise={this.removeWorkoutExercise} />
         {modal}
       </div>
     )

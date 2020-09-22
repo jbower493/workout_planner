@@ -6,6 +6,7 @@ class WorkoutList extends React.Component {
     super(props);
     this.showAddToWorkout = this.showAddToWorkout.bind(this);
     this.deleteWorkout = this.deleteWorkout.bind(this);
+    this.removeWorkoutExercise = this.removeWorkoutExercise.bind(this);
   }
 
   showAddToWorkout(workout) {
@@ -16,6 +17,10 @@ class WorkoutList extends React.Component {
     this.props.deleteWorkout(workout);
   }
 
+  removeWorkoutExercise(workoutId, workoutExerciseId) {
+    this.props.removeWorkoutExercise(workoutId, workoutExerciseId);
+  }
+
   render() {
     return (
       <div className="workout-list">
@@ -24,7 +29,8 @@ class WorkoutList extends React.Component {
           key={this.props.workouts.indexOf(workout)}
           workout={workout}
           showAddToWorkout={this.showAddToWorkout}
-          deleteWorkout={this.deleteWorkout} />)
+          deleteWorkout={this.deleteWorkout}
+          removeWorkoutExercise={this.removeWorkoutExercise} />)
         }
       </div>
     )
