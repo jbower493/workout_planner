@@ -7,6 +7,10 @@ import NewExerciseModal from './Modals/NewExerciseModal';
 import NewWorkoutModal from './Modals/NewWorkoutModal';
 import AddToWorkout from './Modals/AddToWorkout';
 
+import {
+  Container
+} from 'reactstrap';
+
 class Content extends React.Component {
   constructor(props) {
     super(props);

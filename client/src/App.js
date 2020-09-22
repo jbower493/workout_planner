@@ -1,11 +1,15 @@
 import React from 'react';
 import './App.css';
 import Axios from 'axios';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-import Navbar from './Components/Navbar';
+import AppNavbar from './Components/AppNavbar';
 import AuthForm from './Components/Auth/AuthForm';
 import Content from './Components/Content/Content';
 
+import {
+  Container
+} from 'reactstrap';
 
 class App extends React.Component {
   constructor(props) {
@@ -109,8 +113,10 @@ class App extends React.Component {
     }
     return (
       <div className="app">
-        <Navbar user={this.state.user} logout={this.logout} />
-        {content}
+        <AppNavbar user={this.state.user} logout={this.logout} />
+        <Container>
+          {content}
+        </Container>
       </div>
     )
   }
