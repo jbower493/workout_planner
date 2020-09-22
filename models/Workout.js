@@ -18,6 +18,10 @@ const WorkoutSchema = new Schema({
   //exercises: [{ type: Schema.Types.ObjectId, ref: 'Exercise' }]
   exercises: [
     {
+      ObjectId: {
+        type: mongoose.Types.ObjectId,
+        default: new mongoose.Types.ObjectId()
+      },
       exercise: {
         type: Schema.Types.ObjectId,
         ref: 'Exercise'

@@ -13,6 +13,8 @@ html {
   --clr-primary:  rgb(214, 42, 42);
 }
 
+/* Navbar */
+
 header {
   text-align: center;
   padding: 20px 50px;
@@ -22,6 +24,8 @@ header {
   justify-content: space-between;
   align-items: center;
 }
+
+/* AuthForm */
 
 .auth-form {
   width: 300px;
@@ -69,6 +73,8 @@ button:focus {
   cursor: pointer;
 }
 
+/* AddButtons */
+
 .button-holder {
   display: flex;
   width: 100%;
@@ -89,6 +95,8 @@ button:focus {
   font-size: 1rem;
 }
 
+/* Modals */
+
 .page-cover {
   position: fixed;
   top: 0;
@@ -102,7 +110,7 @@ button:focus {
   z-index: 1;
 }
 
-.new-exercise-modal, .new-workout-modal {
+.new-exercise-modal, .new-workout-modal, .modal {
   width: 400px;
   height: fit-content;
   background-color: lightgray;
@@ -114,3 +122,55 @@ button:focus {
   margin: 20px 0;
   text-align: center;
 }
+
+/* WorkoutList */
+
+.workout-list {
+  width: 700px;
+  margin: 0 auto;
+}
+
+/* Workout */
+
+.workout-title {
+  background-color: lightgreen;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.end-section {
+  display: flex;
+}
+
+.add {
+  background-color: var(--clr-primary);
+  color: white;
+  padding: 5px 10px;
+  margin: 10px 10px 10px 0;
+}
+
+.delete-workout {
+  background-color:black;
+  color: white;
+  padding: 5px 10px;
+  margin: 10px 10px 10px 0;
+}
+
+/* Workout Exercise */
+
+.workout-exercise {
+  background-color:lightgrey;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.remove {
+  background-color:black;
+  color: white;
+  padding: 5px 10px;
+  margin: 10px 10px 10px 0;
+}
+
+/* Exercise */

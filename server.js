@@ -121,7 +121,10 @@ app.post('/new-exercise', (req, res, next) => {
   pressUps.save()
     .then(doc => {
       console.log(doc)
-      res.send({ success: true });
+      res.send({
+        success: true,
+        exercise: doc
+      });
     })
     .catch(e => res.send({ success: false }));
 });
@@ -142,6 +145,64 @@ app.post('/new-workout', (req, res, next) => {
       res.send({ success: true });
     })
     .catch(e => res.send({ success: false }));
+});
+
+app.get('/get-workouts', (req, res, next) => {
+  //res.send({ workouts: req.user.workouts });
+  User.findById(req.user.id)
+    .populate({
+      path: 'workouts.exercises.exercise',
+      model: 'Exercise'
+    })
+    .then(doc => {
+      res.send({ workouts: doc.workouts })
+    })
+    .catch(e => res.send({ success: false }))
+});
+
+app.get('/get-exercises', (req, res, next) => {
+  Exercise.find({ owner: req.user.id })
+    .then(docs => {
+      res.send({ exercises: docs });
+    })
+});
+
+app.post('/add-to-workout/:workoutId', (req, res, next) => {
+  // get the workout to be added to
+  const currentWorkout = req.user.workouts.find(workout => workout._id == req.params.workoutId);
+  // push the new exercise onto that workout's exercises array
+  currentWorkout.exercises.push(req.body);
+  // get the index in the users workouts array of the current workout
+  const index = req.user.workouts.indexOf(currentWorkout);
+  // get a copy of the workouts array for the logged in user
+  const workoutsArr = req.user.workouts;
+  // update that workout in the copy of the workouts array, to include the new exercise
+  workoutsArr[index] = currentWorkout;
+  // update user, set workouts as updated workouts array
+  User.findByIdAndUpdate(req.user.id, { workouts: workoutsArr })
+    .then(doc => {
+      res.send({ success: true });
+      console.log(doc)
+    })
+    .catch(e => res.send({ success: false }))
+});
+
+app.delete('/workout/:workoutId', (req, res, next) => {
+  // get the workout to be removed
+  const deadWorkout = req.user.workouts.find(workout => workout._id == req.params.workoutId);
+  // get the index in the users workouts array of the workout to be removed
+  const index = req.user.workouts.indexOf(deadWorkout);
+  // get a copy of the workouts array for the logged in user
+  const workoutsArr = req.user.workouts;
+  // remove the workout
+  workoutsArr.splice(index, 1);
+  // update user, set workouts as updated workouts array
+  User.findByIdAndUpdate(req.user.id, { workouts: workoutsArr })
+    .then(doc => {
+      res.send({ success: true });
+      console.log(doc)
+    })
+    .catch(e => res.send({ success: false }))
 });
 
 app.post('/register', (req, res, next) => {

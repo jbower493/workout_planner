@@ -1,0 +1,1 @@
+GET http://localhost:4500/stupid HTTP/1.1
