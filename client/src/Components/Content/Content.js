@@ -29,6 +29,7 @@ class Content extends React.Component {
     this.addToWorkout = this.addToWorkout.bind(this);
     this.deleteWorkout = this.deleteWorkout.bind(this);
     this.removeWorkoutExercise = this.removeWorkoutExercise.bind(this);
+    this.closeModal = this.closeModal.bind(this);
   }
 
   resetState() {
@@ -159,14 +160,18 @@ class Content extends React.Component {
       })
   }
 
+  closeModal() {
+    this.setState({ modal: false });
+  }
+
   render() {
     let modal = null;
     if(this.state.modal === 'new exercise') {
-      modal = <NewExerciseModal saveNewExercise={this.saveNewExercise} />;
+      modal = <NewExerciseModal saveNewExercise={this.saveNewExercise} closeModal={this.closeModal} />;
     } else if(this.state.modal === 'new workout') {
-      modal = <NewWorkoutModal saveNewWorkout={this.saveNewWorkout} />;
+      modal = <NewWorkoutModal saveNewWorkout={this.saveNewWorkout} closeModal={this.closeModal} />;
     } else if(this.state.modal === 'add to workout') {
-      modal = <AddToWorkout addToWorkout={this.addToWorkout} exercises={this.state.exercises} />
+      modal = <AddToWorkout addToWorkout={this.addToWorkout} exercises={this.state.exercises} closeModal={this.closeModal} />
     }
 
     return (

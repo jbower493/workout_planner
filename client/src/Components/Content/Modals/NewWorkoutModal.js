@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { Modal, ModalHeader, ModalBody, ModalFooter, Button, Form, FormGroup, Label, Input } from 'reactstrap';
+
 class NewWorkoutModal extends React.Component {
   constructor(props) {
     super(props);
@@ -33,13 +35,29 @@ class NewWorkoutModal extends React.Component {
   render() {
     return (
       <div className="page-cover">
-        <div className="new-workout-modal">
-          <h3>New workout</h3>
-          <input type="text" placeholder="Name" onChange={this.setName} />
-          <input type="number" placeholder="Duration" onChange={this.setDuration} />
-          <input type="text" placeholder="Type" onChange={this.setType} />
-          <button onClick={this.saveNewWorkout}>Save</button>
-        </div>
+        <Modal isOpen={true}>
+          <ModalHeader>New Workout</ModalHeader>
+          <ModalBody>
+            <Form>
+              <FormGroup>
+                <Label>Name</Label>
+                <Input type="text" placeholder="Name" onChange={this.setName} />
+              </FormGroup>
+              <FormGroup>
+                <Label>Duration</Label>
+                <Input type="text" placeholder="Duration" onChange={this.setDuration} />
+              </FormGroup>
+              <FormGroup>
+                <Label>Type</Label>
+                <Input type="text" placeholder="Type" onChange={this.setType} />
+              </FormGroup>
+            </Form>
+          </ModalBody>
+          <ModalFooter>
+            <Button onClick={this.saveNewWorkout}>Save</Button>
+            <Button onClick={this.props.closeModal}>Cancel</Button>
+          </ModalFooter>
+        </Modal>
       </div>
     )
   }

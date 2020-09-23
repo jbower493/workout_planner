@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { ListGroupItem, Button } from 'reactstrap';
+
 const WorkoutExercise = (props) => {
   const removeWorkoutExercise = (e) => {
     const workoutId = props.workoutId;
@@ -8,10 +10,10 @@ const WorkoutExercise = (props) => {
   };
 
   return (
-    <div className="workout-exercise">
+    <ListGroupItem className="workout-exercise d-flex justify-content-between align-items-center">
       <p>{props.exercise.exercise.name}</p>
-      <div className="remove" onClick={removeWorkoutExercise}>r</div>
-    </div>
+      <Button color="secondary" onClick={removeWorkoutExercise}>Remove from workout</Button>
+    </ListGroupItem>
   )
 };
 

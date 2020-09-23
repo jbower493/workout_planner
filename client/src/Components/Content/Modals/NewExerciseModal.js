@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { Modal, ModalHeader, ModalBody, ModalFooter, Button, Form, FormGroup, Label, Input } from 'reactstrap';
+
 class NewExerciseModal extends React.Component {
   constructor(props) {
     super(props);
@@ -33,13 +35,29 @@ class NewExerciseModal extends React.Component {
   render() {
     return (
       <div className="page-cover">
-        <div className="new-exercise-modal">
-          <h3>New exercise</h3>
-          <input type="text" placeholder="Name" onChange={this.setName} />
-          <input type="text" placeholder="Description" onChange={this.setDescription} />
-          <input type="text" placeholder="Muscle group" onChange={this.setMuscleGroup} />
-          <button onClick={this.saveNewExercise}>Save</button>
-        </div>
+        <Modal isOpen={true}>
+          <ModalHeader>New exercise</ModalHeader>
+          <ModalBody>
+            <Form>
+              <FormGroup>
+                <Label>Name</Label>
+                <Input type="text" placeholder="Name" onChange={this.setName} />
+              </FormGroup>
+              <FormGroup>
+                <Label>Description</Label>
+                <Input type="text" placeholder="Description" onChange={this.setDescription} />
+              </FormGroup>
+              <FormGroup>
+                <Label>Muscle Group</Label>
+                <Input type="text" placeholder="Muscle group" onChange={this.setMuscleGroup} />
+              </FormGroup>
+            </Form>
+          </ModalBody>
+          <ModalFooter>
+            <Button onClick={this.saveNewExercise}>Save</Button>
+            <Button onClick={this.props.closeModal}>Cancel</Button>
+          </ModalFooter>
+        </Modal>
       </div>
     )
   }

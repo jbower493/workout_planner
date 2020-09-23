@@ -1,6 +1,8 @@
 import React from 'react';
 import Workout from './Workout';
 
+import { ListGroup } from 'reactstrap';
+
 class WorkoutList extends React.Component {
   constructor(props) {
     super(props);
@@ -23,8 +25,7 @@ class WorkoutList extends React.Component {
 
   render() {
     return (
-      <div className="workout-list">
-        <h2>{this.props.user.username}</h2>
+      <div className="w-75 m-auto">
         {this.props.workouts.map(workout => <Workout
           key={this.props.workouts.indexOf(workout)}
           workout={workout}

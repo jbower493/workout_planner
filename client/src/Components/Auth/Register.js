@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 
+import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+
 const Register = (props) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -9,13 +11,19 @@ const Register = (props) => {
   };
 
   return (
-    <div className="register-form auth-form">
+    <Form className="w-50 m-auto">
       <h2>Register</h2>
-      <input type="text" placeholder="username" onChange={e => setUsername(e.target.value)} />
-      <input type="password" placeholder="password" onChange={e => setPassword(e.target.value)} />
-      <button onClick={register} >Send</button>
-      <p className="toggle-auth" onClick={props.toggleAuth} >Login</p>
-    </div>
+      <FormGroup>
+        <Label>Username</Label>
+        <Input type="text" placeholder="username" onChange={e => setUsername(e.target.value)} />
+      </FormGroup>
+      <FormGroup>
+        <Label>Password</Label>
+        <Input type="password" placeholder="password" onChange={e => setPassword(e.target.value)} />
+      </FormGroup>
+      <Button onClick={register} >Register</Button>
+      <p className="text-primary mt-2" onClick={props.toggleAuth} >Login</p>
+    </Form>
   )
 };
 

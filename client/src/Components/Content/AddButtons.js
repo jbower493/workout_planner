@@ -1,10 +1,14 @@
 import React from 'react';
 
+import {
+  Button
+} from 'reactstrap';
+
 const AddButtons = (props) => {
   return (
-    <div className="button-holder">
-      <div className="add-button" onClick={props.showNewExercise} >New Exercise</div>
-      <div className="add-button" onClick={props.showNewWorkout} >New Workout</div>
+    <div className="button-holder w-75 ml-auto mr-auto mb-4">
+      <Button className="mr-3" onClick={props.showNewExercise} >New Exercise</Button>
+      <Button onClick={props.showNewWorkout} >New Workout</Button>
     </div>
   )
 };

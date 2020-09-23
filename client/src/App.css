@@ -1,1 +1,3 @@
-
+.text-primary, .workout-name, .logout-button {
+  cursor: pointer;
+}

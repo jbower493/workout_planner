@@ -19,7 +19,7 @@ const AppNavbar = (props) => {
             <NavLink>About</NavLink>
           </NavItem>
           {props.user ? <NavItem>
-              <NavLink onClick={props.logout} >Logout</NavLink>
+              <NavLink className="logout-button" onClick={props.logout} >Logout</NavLink>
             </NavItem> : null
           }
         </Nav>
