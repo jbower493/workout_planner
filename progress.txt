@@ -1,0 +1,3 @@
+- Just created the buttons and pages for workout details and exercise list, made the buttons to show these pages work and created the shell of each component with the exercises / workout available to each via props.
+
+Next job - build out each of these 2 pages
