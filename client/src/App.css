@@ -1,3 +1,4 @@
-.text-primary, .workout-name, .logout-button {
+.text-body, p .text-primary, .workout-name, .logout-button, .toggle-auth {
   cursor: pointer;
 }
+

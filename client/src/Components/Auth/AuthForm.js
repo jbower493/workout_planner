@@ -3,10 +3,6 @@ import Login from './Login.js';
 import Register from './Register';
 
 class AuthForm extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     let form;
     if(this.props.form === 'register') {

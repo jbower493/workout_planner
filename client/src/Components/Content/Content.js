@@ -6,10 +6,8 @@ import AddButtons from './AddButtons';
 import NewExerciseModal from './Modals/NewExerciseModal';
 import NewWorkoutModal from './Modals/NewWorkoutModal';
 import AddToWorkout from './Modals/AddToWorkout';
-
-import {
-  Container
-} from 'reactstrap';
+import WorkoutDetails from './Workouts/WorkoutDetails';
+import ExerciseList from './Exercises/ExerciseList';
 
 class Content extends React.Component {
   constructor(props) {
@@ -17,9 +15,11 @@ class Content extends React.Component {
     this.state = {
       loading: true,
       modal: false,
+      page: 'workout list',
       workouts: [],
       exercises: [],
-      workoutToAddTo: null
+      workoutToAddTo: null,
+      workoutToView: null
     };
     this.showNewExercise = this.showNewExercise.bind(this);
     this.showNewWorkout = this.showNewWorkout.bind(this);
@@ -30,6 +30,8 @@ class Content extends React.Component {
     this.deleteWorkout = this.deleteWorkout.bind(this);
     this.removeWorkoutExercise = this.removeWorkoutExercise.bind(this);
     this.closeModal = this.closeModal.bind(this);
+    this.togglePage = this.togglePage.bind(this);
+    this.viewWorkout = this.viewWorkout.bind(this);
   }
 
   resetState() {
@@ -164,7 +166,47 @@ class Content extends React.Component {
     this.setState({ modal: false });
   }
 
+  togglePage() {
+    this.state.page === 'workout list' ? this.setState({ page: 'exercise list' }) : this.setState({ page: 'workout list' });
+  }
+
+  viewWorkout(workout) {
+    this.setState({
+      workoutToView: workout,
+      page: 'workout details'
+    });
+  }
+
   render() {
+    let page = null;
+    if(this.state.page === 'workout list') {
+      page = <div>
+        <AddButtons
+          showNewExercise={this.showNewExercise}
+          showNewWorkout={this.showNewWorkout}
+          togglePage={this.togglePage}
+          active={this.state.page} />
+        <WorkoutList
+          workouts={this.state.workouts}
+          user={this.props.user}
+          showAddToWorkout={this.showAddToWorkout}
+          deleteWorkout={this.deleteWorkout}
+          removeWorkoutExercise={this.removeWorkoutExercise}
+          viewWorkout={this.viewWorkout} />
+      </div>;
+    } else if(this.state.page === 'workout details') {
+      page = <WorkoutDetails workout={this.state.workoutToView} />;
+    } else if(this.state.page === 'exercise list') {
+      page = <div>
+        <AddButtons
+          showNewExercise={this.showNewExercise}
+          showNewWorkout={this.showNewWorkout}
+          togglePage={this.togglePage}
+          active={this.state.page} />
+        <ExerciseList exercises={this.state.exercises} />
+      </div>;
+    }
+
     let modal = null;
     if(this.state.modal === 'new exercise') {
       modal = <NewExerciseModal saveNewExercise={this.saveNewExercise} closeModal={this.closeModal} />;
@@ -176,13 +218,7 @@ class Content extends React.Component {
 
     return (
       <div>
-        <AddButtons showNewExercise={this.showNewExercise} showNewWorkout={this.showNewWorkout} />
-        <WorkoutList
-          workouts={this.state.workouts}
-          user={this.props.user}
-          showAddToWorkout={this.showAddToWorkout}
-          deleteWorkout={this.deleteWorkout}
-          removeWorkoutExercise={this.removeWorkoutExercise} />
+        {page}
         {modal}
       </div>
     )

@@ -20,13 +20,18 @@ const Workout = (props) => {
     props.removeWorkoutExercise(workoutId, workoutExerciseId);
   };
 
+  const viewWorkout = () => {
+    props.viewWorkout(props.workout);
+  };
+
   return (
     <div>
       <ListGroup>
         <ListGroupItem color="primary" className="workout-title d-flex justify-content-between align-items-center">
           <h3 className="workout-name" onClick={toggle} >{props.workout.name} <i className="fas fa-caret-down"></i></h3>
           <div className="end-section">
-            <Button color="secondary" className="mr-3" onClick={showAddToWorkout} >Add exercise</Button>
+            <Button color="secondary" onClick={viewWorkout}>Workout details</Button>
+            <Button color="secondary" className="ml-3 mr-3" onClick={showAddToWorkout} >Add exercise</Button>
             <Button color="secondary" onClick={deleteWorkout}>Delete workout</Button>
           </div>
         </ListGroupItem>

@@ -1,14 +1,13 @@
 import React from 'react';
 import Workout from './Workout';
 
-import { ListGroup } from 'reactstrap';
-
 class WorkoutList extends React.Component {
   constructor(props) {
     super(props);
     this.showAddToWorkout = this.showAddToWorkout.bind(this);
     this.deleteWorkout = this.deleteWorkout.bind(this);
     this.removeWorkoutExercise = this.removeWorkoutExercise.bind(this);
+    this.viewWorkout = this.viewWorkout.bind(this);
   }
 
   showAddToWorkout(workout) {
@@ -23,6 +22,10 @@ class WorkoutList extends React.Component {
     this.props.removeWorkoutExercise(workoutId, workoutExerciseId);
   }
 
+  viewWorkout(workout) {
+    this.props.viewWorkout(workout);
+  }
+
   render() {
     return (
       <div className="w-75 m-auto">
@@ -31,7 +34,8 @@ class WorkoutList extends React.Component {
           workout={workout}
           showAddToWorkout={this.showAddToWorkout}
           deleteWorkout={this.deleteWorkout}
-          removeWorkoutExercise={this.removeWorkoutExercise} />)
+          removeWorkoutExercise={this.removeWorkoutExercise}
+          viewWorkout={this.viewWorkout} />)
         }
       </div>
     )
