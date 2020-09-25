@@ -12,8 +12,8 @@ const Workout = (props) => {
     props.showAddToWorkout(props.workout);
   };
 
-  const deleteWorkout = e => {
-    props.deleteWorkout(props.workout);
+  const showDeleteModal = e => {
+    props.showDeleteModal('workout', props.workout._id);
   };
 
   const removeWorkoutExercise = (workoutId, workoutExerciseId) => {
@@ -32,7 +32,7 @@ const Workout = (props) => {
           <div className="end-section">
             <Button color="secondary" onClick={viewWorkout}>Workout details</Button>
             <Button color="secondary" className="ml-3 mr-3" onClick={showAddToWorkout} >Add exercise</Button>
-            <Button color="secondary" onClick={deleteWorkout}>Delete workout</Button>
+            <Button color="secondary" onClick={showDeleteModal}>Delete workout</Button>
           </div>
         </ListGroupItem>
         <Collapse isOpen={isOpen}>

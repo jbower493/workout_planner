@@ -11,13 +11,17 @@ const Exercise = (props) => {
     props.showEditExercise(props.exercise);
   };
 
+  const showDeleteModal = e => {
+    props.showDeleteModal('exercise', props.exercise);
+  };
+
   return (
     <ListGroupItem>
       <div className="d-flex justify-content-between align-items-center">
         <h5 className="pointer" onClick={toggle}>{props.exercise.name} <i className="fas fa-caret-down"></i></h5>
         <div>
           <Button color="secondary" className="mr-3" onClick={showEditExercise}>Edit exercise</Button>
-          <Button color="secondary" onClick={() => null}>Delete exercise</Button>
+          <Button color="secondary" onClick={showDeleteModal}>Delete exercise</Button>
         </div>
       </div>
       <Collapse isOpen={isOpen}>

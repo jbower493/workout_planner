@@ -7,6 +7,7 @@ import NewExerciseModal from './Modals/NewExerciseModal';
 import NewWorkoutModal from './Modals/NewWorkoutModal';
 import AddToWorkout from './Modals/AddToWorkout';
 import EditExerciseModal from './Modals/EditExerciseModal';
+import ConfirmDeleteModal from './Modals/ConfirmDeleteModal';
 import WorkoutDetails from './Workouts/WorkoutDetails';
 import ExerciseList from './Exercises/ExerciseList';
 
@@ -21,7 +22,9 @@ class Content extends React.Component {
       exercises: [],
       workoutToAddTo: null,
       workoutToView: null,
-      exerciseToEdit: null
+      exerciseToEdit: null,
+      exerciseToDelete: null,
+      workoutToDelete: null
     };
     this.showNewExercise = this.showNewExercise.bind(this);
     this.showNewWorkout = this.showNewWorkout.bind(this);
@@ -37,6 +40,8 @@ class Content extends React.Component {
     this.togglePage = this.togglePage.bind(this);
     this.viewWorkout = this.viewWorkout.bind(this);
     this.backToDashboard = this.backToDashboard.bind(this);
+    this.showDeleteModal = this.showDeleteModal.bind(this);
+    this.deleteExercise = this.deleteExercise.bind(this);
   }
 
   resetState() {
@@ -169,14 +174,18 @@ class Content extends React.Component {
       })
   }
 
-  deleteWorkout(workout) {
+  deleteWorkout() {
     Axios({
       method: 'DELETE',
-      url: `http://localhost:4500/workout/${workout._id}`,
+      url: `http://localhost:4500/workout/${this.state.workoutToDelete._id}`,
       withCredentials: true
     })
       .then(res => {
         if(res.data.success) {
+          this.setState({
+            modal: false,
+            workoutToDelete: null
+          });
           this.resetState();
         }
       })
@@ -214,6 +223,35 @@ class Content extends React.Component {
     this.setState({ page: 'workout list' });
   }
 
+  showDeleteModal(deleteWhat, idToDel) {
+    if(deleteWhat === 'exercise') {
+      this.setState({ exerciseToDelete: idToDel });
+    } else {
+      this.setState({ workoutToDelete: idToDel });
+    }
+    this.setState({
+      modal: 'confirm delete'
+    });
+  }
+
+  deleteExercise() {
+    Axios({
+      method: 'DELETE',
+      url: `http://localhost:4500/exercise/${this.state.exerciseToDelete._id}`,
+      withCredentials: true
+    })
+      .then(res => {
+        if(res.data.success) {
+          console.log(res.data)
+          this.setState({
+            modal: false,
+            workoutToDelete: null
+          });
+          this.resetState();
+        }
+      })
+  }
+
   render() {
     let page = null;
     if(this.state.page === 'workout list') {
@@ -227,7 +265,7 @@ class Content extends React.Component {
           workouts={this.state.workouts}
           user={this.props.user}
           showAddToWorkout={this.showAddToWorkout}
-          deleteWorkout={this.deleteWorkout}
+          showDeleteModal={this.showDeleteModal}
           removeWorkoutExercise={this.removeWorkoutExercise}
           viewWorkout={this.viewWorkout} />
       </div>;
@@ -242,7 +280,10 @@ class Content extends React.Component {
           showNewWorkout={this.showNewWorkout}
           togglePage={this.togglePage}
           active={this.state.page} />
-        <ExerciseList exercises={this.state.exercises} showEditExercise={this.showEditExercise} />
+        <ExerciseList
+          exercises={this.state.exercises}
+          showEditExercise={this.showEditExercise}
+          showDeleteModal={this.showDeleteModal} />
       </div>;
     }
 
@@ -257,6 +298,13 @@ class Content extends React.Component {
       modal = <EditExerciseModal
         exercise={this.state.exerciseToEdit}
         saveEditedExercise={this.saveEditedExercise}
+        closeModal={this.closeModal} />
+    } else if(this.state.modal === 'confirm delete') {
+      modal = <ConfirmDeleteModal
+        exerciseToDelete={this.state.exerciseToDelete}
+        workoutToDelete={this.state.workoutToDelete}
+        deleteWorkout={this.deleteWorkout}
+        deleteExercise={this.deleteExercise}
         closeModal={this.closeModal} />
     }
 

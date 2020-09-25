@@ -22,7 +22,7 @@ const Login = (props) => {
         <Input type="password" placeholder="password" onChange={e => setPassword(e.target.value)} />
       </FormGroup>
       <Button onClick={login} >Login</Button>
-      <p className="text-primary mt-2" onClick={props.toggleAuth} >Register</p>
+      <p className="toggle-auth text-primary mt-2" onClick={props.toggleAuth} >Register</p>
     </Form>
   )
 };

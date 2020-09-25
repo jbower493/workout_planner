@@ -178,6 +178,23 @@ app.delete('/workout-exercise/:workoutExerciseId/:workoutId', (req, res, next) =
     .catch(e => res.send({ success: false }))
 });
 
+app.delete('/exercise/:exerciseId', (req, res, next) => {
+  Exercise.findByIdAndDelete(req.params.exerciseId)
+    .then(doc => {
+      const workouts = req.user.workouts;
+      workouts.forEach(workout => {
+        for(let i = 0; i < workout.exercises.length; i++) {
+          if(workout.exercises[i].exercise == req.params.exerciseId) {
+            workout.exercises.splice(i, 1);
+          }
+        }
+      })
+      User.findByIdAndUpdate(req.user.id, { workouts })
+        .then(result => res.send({ success: true }));
+    })
+    .catch(e => res.send({ success: false }));
+});
+
 app.post('/register', (req, res, next) => {
   User.findOne({ username: req.body.username }, async (err, doc) => {
     if(err) throw err;

@@ -10,7 +10,8 @@ const ExerciseList = (props) => {
       {props.exercises.map(ex => <Exercise
         exercise={ex} 
         showEditExercise={props.showEditExercise}
-        key={props.exercises.indexOf(ex)} />)}
+        key={props.exercises.indexOf(ex)}
+        showDeleteModal={props.showDeleteModal} />)}
     </ListGroup>
   )
 };
