@@ -28,7 +28,7 @@ class WorkoutList extends React.Component {
 
   render() {
     return (
-      <div className="w-75 m-auto">
+      <div>
         {this.props.workouts.map(workout => <Workout
           key={this.props.workouts.indexOf(workout)}
           workout={workout}

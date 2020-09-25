@@ -1,10 +1,17 @@
 import React from 'react';
 
+import Exercise from './Exercise';
+
+import { ListGroup } from 'reactstrap';
+
 const ExerciseList = (props) => {
   return (
-    <div>
-      {props.exercises.map(ex => <div><h4>{ex.name}</h4><p>{ex.description}</p></div>)}
-    </div>
+    <ListGroup>
+      {props.exercises.map(ex => <Exercise
+        exercise={ex} 
+        showEditExercise={props.showEditExercise}
+        key={props.exercises.indexOf(ex)} />)}
+    </ListGroup>
   )
 };
 

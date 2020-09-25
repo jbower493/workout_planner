@@ -11,7 +11,7 @@ const Login = (props) => {
   };
 
   return (
-    <Form className="w-50 m-auto">
+    <Form>
       <h2>Login</h2>
       <FormGroup>
         <Label>Username</Label>

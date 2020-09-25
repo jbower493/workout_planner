@@ -11,7 +11,7 @@ const Register = (props) => {
   };
 
   return (
-    <Form className="w-50 m-auto">
+    <Form>
       <h2>Register</h2>
       <FormGroup>
         <Label>Username</Label>

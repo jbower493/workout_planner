@@ -72,6 +72,19 @@ app.post('/new-exercise', (req, res, next) => {
     .catch(e => res.send({ success: false }));
 });
 
+app.post('/edit-exercise/:exerciseId', (req, res, next) => {
+  Exercise.findByIdAndUpdate(req.params.exerciseId, {
+    name: req.body.name,
+    description: req.body.description,
+    muscleGroup: req.body.muscleGroup
+  })
+    .then(doc => res.send({ success: true }))
+    .catch(e => {
+      console.log(e);
+      res.send({ success: false });
+    })
+});
+
 app.post('/new-workout', (req, res, next) => {
   const currentUser = req.user;
 

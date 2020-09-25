@@ -6,6 +6,7 @@ import AddButtons from './AddButtons';
 import NewExerciseModal from './Modals/NewExerciseModal';
 import NewWorkoutModal from './Modals/NewWorkoutModal';
 import AddToWorkout from './Modals/AddToWorkout';
+import EditExerciseModal from './Modals/EditExerciseModal';
 import WorkoutDetails from './Workouts/WorkoutDetails';
 import ExerciseList from './Exercises/ExerciseList';
 
@@ -19,19 +20,23 @@ class Content extends React.Component {
       workouts: [],
       exercises: [],
       workoutToAddTo: null,
-      workoutToView: null
+      workoutToView: null,
+      exerciseToEdit: null
     };
     this.showNewExercise = this.showNewExercise.bind(this);
     this.showNewWorkout = this.showNewWorkout.bind(this);
     this.showAddToWorkout = this.showAddToWorkout.bind(this);
+    this.showEditExercise = this.showEditExercise.bind(this);
     this.saveNewExercise = this.saveNewExercise.bind(this);
     this.saveNewWorkout = this.saveNewWorkout.bind(this);
     this.addToWorkout = this.addToWorkout.bind(this);
+    this.saveEditedExercise = this.saveEditedExercise.bind(this);
     this.deleteWorkout = this.deleteWorkout.bind(this);
     this.removeWorkoutExercise = this.removeWorkoutExercise.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.togglePage = this.togglePage.bind(this);
     this.viewWorkout = this.viewWorkout.bind(this);
+    this.backToDashboard = this.backToDashboard.bind(this);
   }
 
   resetState() {
@@ -77,6 +82,13 @@ class Content extends React.Component {
       workoutToAddTo: workout
     });
     console.log(workout)
+  }
+
+  showEditExercise(exercise) {
+    this.setState({
+      modal: 'edit exercise',
+      exerciseToEdit: exercise
+    });
   }
 
   saveNewExercise(name, description, muscleGroup) {
@@ -136,6 +148,27 @@ class Content extends React.Component {
       })
   }
 
+  saveEditedExercise(id, name, description, muscleGroup) {
+    Axios({
+      method: 'POST',
+      url: `http://localhost:4500/edit-exercise/${id}`,
+      withCredentials: true,
+      data: {
+        name,
+        description,
+        muscleGroup
+      }
+    })
+      .then(res => {
+        console.log(res.data);
+        this.setState({
+          modal: false,
+          exerciseToEdit: null
+        });
+        this.resetState();
+      })
+  }
+
   deleteWorkout(workout) {
     Axios({
       method: 'DELETE',
@@ -177,6 +210,10 @@ class Content extends React.Component {
     });
   }
 
+  backToDashboard() {
+    this.setState({ page: 'workout list' });
+  }
+
   render() {
     let page = null;
     if(this.state.page === 'workout list') {
@@ -195,7 +232,9 @@ class Content extends React.Component {
           viewWorkout={this.viewWorkout} />
       </div>;
     } else if(this.state.page === 'workout details') {
-      page = <WorkoutDetails workout={this.state.workoutToView} />;
+      page = <WorkoutDetails
+        workout={this.state.workoutToView}
+        backToDashboard={this.backToDashboard} />;
     } else if(this.state.page === 'exercise list') {
       page = <div>
         <AddButtons
@@ -203,7 +242,7 @@ class Content extends React.Component {
           showNewWorkout={this.showNewWorkout}
           togglePage={this.togglePage}
           active={this.state.page} />
-        <ExerciseList exercises={this.state.exercises} />
+        <ExerciseList exercises={this.state.exercises} showEditExercise={this.showEditExercise} />
       </div>;
     }
 
@@ -214,6 +253,11 @@ class Content extends React.Component {
       modal = <NewWorkoutModal saveNewWorkout={this.saveNewWorkout} closeModal={this.closeModal} />;
     } else if(this.state.modal === 'add to workout') {
       modal = <AddToWorkout addToWorkout={this.addToWorkout} exercises={this.state.exercises} closeModal={this.closeModal} />
+    } else if(this.state.modal === 'edit exercise') {
+      modal = <EditExerciseModal
+        exercise={this.state.exerciseToEdit}
+        saveEditedExercise={this.saveEditedExercise}
+        closeModal={this.closeModal} />
     }
 
     return (

@@ -1,1 +1,1 @@
-DELETE http://localhost:4500/workout-exercise/5f6996a25f223e1774974afe HTTP/1.1
+GET http://localhost:4500/testing/5f69902fc55c8a15341caf79 HTTP/1.1
