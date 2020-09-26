@@ -195,6 +195,35 @@ app.delete('/exercise/:exerciseId', (req, res, next) => {
     .catch(e => res.send({ success: false }));
 });
 
+app.post('/edit-workout-exercise/:workoutId/:workoutExerciseId', (req, res, next) => {
+  const workouts = req.user.workouts;
+  const workout = workouts.find(item => item._id == req.params.workoutId);
+  const workoutExercise = workout.exercises.find(item => item._id == req.params.workoutExerciseId);
+  workoutExercise.reps = req.body.reps;
+  workoutExercise.sets = req.body.sets;
+  workoutExercise.weight = req.body.weight;
+  User.findByIdAndUpdate(req.user._id, { workouts })
+    .then(doc => res.send({ success: true }))
+    .catch(e => {
+      res.send({ success: false });
+      console.log(e)
+    });
+});
+
+app.post('/edit-workout/:workoutId', (req, res, next) => {
+  const workouts = req.user.workouts;
+  const workout = workouts.find(item => item._id == req.params.workoutId);
+  workout.name = req.body.name;
+  workout.duration = req.body.duration;
+  workout.type = req.body.type;
+  User.findByIdAndUpdate(req.user._id, { workouts })
+    .then(doc => res.send({ success: true }))
+    .catch(e => {
+      res.send({ success: false });
+      console.log(e)
+    });
+});
+
 app.post('/register', (req, res, next) => {
   User.findOne({ username: req.body.username }, async (err, doc) => {
     if(err) throw err;

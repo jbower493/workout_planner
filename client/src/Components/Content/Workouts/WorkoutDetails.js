@@ -5,6 +5,15 @@ import BackButton from '../BackButton';
 import { Button, ListGroupItem, Card, CardTitle, CardText, CardSubtitle, CardBody, CardHeader, CardFooter } from 'reactstrap';
 
 class WorkoutDetails extends React.Component {
+  constructor(props) {
+    super(props);
+    this.showEditWorkoutModal = this.showEditWorkoutModal.bind(this);
+  }
+
+  showEditWorkoutModal(e) {
+    this.props.showEditWorkoutModal(this.props.workout);
+  }
+
   render() {
     return (
       <div>
@@ -13,7 +22,7 @@ class WorkoutDetails extends React.Component {
         <ListGroupItem color="primary" className="d-flex justify-content-between">
           <div>
             <h2>{this.props.workout.name}</h2>
-            <Button color="secondary">Edit</Button>
+            <Button color="secondary" onClick={this.showEditWorkoutModal}>Edit</Button>
           </div>
           <div>
             <p>Type: {this.props.workout.type}</p>
@@ -24,7 +33,7 @@ class WorkoutDetails extends React.Component {
         {
           this.props.workout.exercises.map(exercise => {
             return (
-              <div class="col mb-4">
+              <div className="col mb-4">
                 <Card className="card h-100">
                   <CardHeader>
                     <CardTitle className="d-flex justify-content-between">
@@ -40,7 +49,12 @@ class WorkoutDetails extends React.Component {
                     <CardText>{exercise.exercise.description}</CardText>
                   </CardBody>
                   <CardFooter>
-                    <Button color="secondary">Edit</Button>
+                    <Button
+                      color="secondary"
+                      onClick={() => this.props.showEditWorkoutExerciseModal({
+                        workoutId: this.props.workout._id,
+                        workoutExercise: exercise
+                      })}>Edit</Button>
                   </CardFooter>
                 </Card>
               </div>

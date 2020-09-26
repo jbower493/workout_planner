@@ -8,6 +8,8 @@ import NewWorkoutModal from './Modals/NewWorkoutModal';
 import AddToWorkout from './Modals/AddToWorkout';
 import EditExerciseModal from './Modals/EditExerciseModal';
 import ConfirmDeleteModal from './Modals/ConfirmDeleteModal';
+import EditWorkoutModal from './Modals/EditWorkoutModal';
+import EditWorkoutExerciseModal from './Modals/EditWorkoutExerciseModal';
 import WorkoutDetails from './Workouts/WorkoutDetails';
 import ExerciseList from './Exercises/ExerciseList';
 
@@ -24,7 +26,9 @@ class Content extends React.Component {
       workoutToView: null,
       exerciseToEdit: null,
       exerciseToDelete: null,
-      workoutToDelete: null
+      workoutToDelete: null,
+      workoutToEdit: null,
+      workoutExerciseToEdit: null
     };
     this.showNewExercise = this.showNewExercise.bind(this);
     this.showNewWorkout = this.showNewWorkout.bind(this);
@@ -42,9 +46,13 @@ class Content extends React.Component {
     this.backToDashboard = this.backToDashboard.bind(this);
     this.showDeleteModal = this.showDeleteModal.bind(this);
     this.deleteExercise = this.deleteExercise.bind(this);
+    this.showEditWorkoutExerciseModal = this.showEditWorkoutExerciseModal.bind(this);
+    this.showEditWorkoutModal = this.showEditWorkoutModal.bind(this);
+    this.editWorkout = this.editWorkout.bind(this);
+    this.editWorkoutExercise = this.editWorkoutExercise.bind(this);
   }
 
-  resetState() {
+  resetState(workoutBeingViewedId) {
     Axios({
       method: 'GET',
       withCredentials: true,
@@ -53,6 +61,11 @@ class Content extends React.Component {
       .then(res => {
         console.log(res.data)
         this.setState({ workouts: res.data.workouts });
+
+        if(workoutBeingViewedId) {
+          const newWorkout = res.data.workouts.find(workout => workout._id == workoutBeingViewedId);
+          this.setState({ workoutToView: newWorkout });
+        }
 
         Axios({
           method: 'GET',
@@ -252,6 +265,73 @@ class Content extends React.Component {
       })
   }
 
+  showEditWorkoutModal(workout) {
+    this.setState({
+      modal: 'edit workout',
+      workoutToEdit: workout
+    });
+    console.log(workout)
+  }
+
+  showEditWorkoutExerciseModal(workoutExercise) {
+    // pass in workout exercise as an object with workoutExerciseId and workoutId as properties, so I dont have to set 2 different states
+    this.setState({
+      modal: 'edit workout exercise',
+      workoutExerciseToEdit: workoutExercise
+    });
+    console.log(workoutExercise);
+  }
+
+  editWorkout(name, duration, type) {
+    Axios({
+      method: 'POST',
+      withCredentials: true,
+      url: `http://localhost:4500/edit-workout/${this.state.workoutToEdit._id}`,
+      data: {
+        name,
+        duration,
+        type
+      }
+    })
+      .then(res => {
+        if(res.data.success) {
+          console.log(res.data)
+          const id = this.state.workoutToEdit._id;
+          this.setState({
+            modal: false,
+            workoutToEdit: null
+          });
+          this.resetState(id);
+        }
+        console.log(res.data);
+      })
+  }
+
+  editWorkoutExercise(reps, sets, weight) {
+    Axios({
+      method: 'POST',
+      withCredentials: true,
+      url: `http://localhost:4500/edit-workout-exercise/${this.state.workoutExerciseToEdit.workoutId}/${this.state.workoutExerciseToEdit.workoutExercise._id}`,
+      data: {
+        reps,
+        sets,
+        weight
+      }
+    })
+      .then(res => {
+        if(res.data.success) {
+          console.log(res.data)
+          const id = this.state.workoutExerciseToEdit.workoutId;
+          this.setState({
+            modal: false,
+            workoutExerciseToEdit: null
+          });
+          this.resetState(id);
+        }
+        console.log(res.data);
+      })
+  }
+
   render() {
     let page = null;
     if(this.state.page === 'workout list') {
@@ -272,7 +352,9 @@ class Content extends React.Component {
     } else if(this.state.page === 'workout details') {
       page = <WorkoutDetails
         workout={this.state.workoutToView}
-        backToDashboard={this.backToDashboard} />;
+        backToDashboard={this.backToDashboard}
+        showEditWorkoutExerciseModal={this.showEditWorkoutExerciseModal}
+        showEditWorkoutModal={this.showEditWorkoutModal} />;
     } else if(this.state.page === 'exercise list') {
       page = <div>
         <AddButtons
@@ -306,6 +388,16 @@ class Content extends React.Component {
         deleteWorkout={this.deleteWorkout}
         deleteExercise={this.deleteExercise}
         closeModal={this.closeModal} />
+    } else if(this.state.modal === 'edit workout') {
+      modal = <EditWorkoutModal
+        workoutToEdit={this.state.workoutToEdit}
+        editWorkout={this.editWorkout}
+        closeModal={this.closeModal} />;
+    } else if(this.state.modal === 'edit workout exercise') {
+      modal = <EditWorkoutExerciseModal
+        workoutExerciseToEdit={this.state.workoutExerciseToEdit}
+        editWorkoutExercise={this.editWorkoutExercise}
+        closeModal={this.closeModal} />;
     }
 
     return (
