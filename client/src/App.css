@@ -2,3 +2,45 @@
   cursor: pointer;
 }
 
+.middle-button, .left-button {
+  margin: 0 1rem;
+}
+
+@media (max-width: 900px) {
+  .auth-button {
+    width: 100%;
+  }
+
+  .stack {
+    flex-direction: column;
+  }
+  
+  .workout-name, .exercise-name, .end-section {
+    width: 100%;
+  }
+
+  .end-section {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .stack-button {
+    margin: 10px 0 0 0;
+  }
+
+  .new-buttons {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .top-new-button {
+    margin-bottom: 10px;
+    width: 100%;
+  }
+
+  .toggle-lists {
+    flex: 1;
+    text-align: right;
+  }
+}
+

@@ -63,7 +63,7 @@ class Content extends React.Component {
         this.setState({ workouts: res.data.workouts });
 
         if(workoutBeingViewedId) {
-          const newWorkout = res.data.workouts.find(workout => workout._id == workoutBeingViewedId);
+          const newWorkout = res.data.workouts.find(workout => workout._id === workoutBeingViewedId);
           this.setState({ workoutToView: newWorkout });
         }
 

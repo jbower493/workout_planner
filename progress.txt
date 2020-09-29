@@ -1,3 +1,3 @@
-Delete exercise buttons on exercise list done
+Finished all functionality now.
 
-Unfinished functionality, the edit buttons on the workout details page dont work yet
+Next job is to learn redux or context and make a branch using either (try redux first)

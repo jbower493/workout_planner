@@ -26,13 +26,13 @@ const Workout = (props) => {
 
   return (
     <div>
-      <ListGroup>
-        <ListGroupItem color="primary" className="workout-title d-flex justify-content-between align-items-center">
-          <h3 className="workout-name" onClick={toggle} >{props.workout.name} <i className="fas fa-caret-down"></i></h3>
+      <ListGroup className="mb-3">
+        <ListGroupItem color="primary" className="workout-title stack d-flex justify-content-between align-items-center">
+          <h4 className="workout-name" onClick={toggle} >{props.workout.name} <i className="fas fa-caret-down"></i></h4>
           <div className="end-section">
-            <Button color="secondary" onClick={viewWorkout}>Workout details</Button>
-            <Button color="secondary" className="ml-3 mr-3" onClick={showAddToWorkout} >Add exercise</Button>
-            <Button color="secondary" onClick={showDeleteModal}>Delete workout</Button>
+            <Button color="secondary" className="stack-button" onClick={viewWorkout}>Workout details</Button>
+            <Button color="secondary" className="stack-button middle-button" onClick={showAddToWorkout} >Add exercise</Button>
+            <Button color="secondary" className="stack-button" onClick={showDeleteModal}>Delete workout</Button>
           </div>
         </ListGroupItem>
         <Collapse isOpen={isOpen}>

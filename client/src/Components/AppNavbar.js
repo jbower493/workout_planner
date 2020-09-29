@@ -15,9 +15,6 @@ const AppNavbar = (props) => {
       <Container>
         <NavbarBrand>Workout Planner</NavbarBrand>
         <Nav className="ml-auto" navbar>
-          <NavItem>
-            <NavLink>About</NavLink>
-          </NavItem>
           {props.user ? <NavItem>
               <NavLink className="logout-button" onClick={props.logout} >Logout</NavLink>
             </NavItem> : null

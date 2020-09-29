@@ -7,11 +7,11 @@ import {
 const AddButtons = (props) => {
   return (
     <div className="button-holder mb-4 d-flex justify-content-between align-items-end">
-      <div>
-        <Button className="mr-3" onClick={props.showNewExercise} >New Exercise</Button>
+      <div className="new-buttons">
+        <Button className="mr-3 top-new-button" onClick={props.showNewExercise} >New Exercise</Button>
         <Button onClick={props.showNewWorkout} >New Workout</Button>
       </div>
-      <div>
+      <div className="toggle-lists">
         <span
           className={props.active === 'workout list' ? 'text-primary ml-3' : 'text-body ml-3'}
           onClick={props.togglePage}>Workout List</span>

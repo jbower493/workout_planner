@@ -21,7 +21,7 @@ class WorkoutDetails extends React.Component {
         
         <ListGroupItem color="primary" className="d-flex justify-content-between">
           <div>
-            <h2>{this.props.workout.name}</h2>
+            <h4>{this.props.workout.name}</h4>
             <Button color="secondary" onClick={this.showEditWorkoutModal}>Edit</Button>
           </div>
           <div>
