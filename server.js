@@ -6,6 +6,7 @@ const cors = require('cors');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
 const localStrategy = require('passport-local').Strategy;
+require('dotenv').config();
 
 const Exercise = require('./models/Exercise.js');
 const WorkoutExercise = require('./models/WorkoutExercise');
@@ -14,10 +15,10 @@ const User = require('./models/User.js');
 
 const app = express();
 
-const PORT = 4500;
+const PORT = process.env.PORT;
 
 // db connection
-const db = 'mongodb://superuser:5uperStrongM0ng@localhost/workout_planner?authSource=admin';
+const db = process.env.MONGO_URI;
 
 mongoose.connect(db, {
   useNewUrlParser: true,
@@ -32,7 +33,7 @@ mongoose.connect(db, {
 //const maxAge = 1000 * 60 * 60 * 2;
 
 app.use(session({
-  secret: 'some secret',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
   /*cookie: {
