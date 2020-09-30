@@ -7,9 +7,9 @@ import AppNavbar from './Components/AppNavbar';
 import AuthForm from './Components/Auth/AuthForm';
 import Content from './Components/Content/Content';
 
-import {
-  Container
-} from 'reactstrap';
+import { Container} from 'reactstrap';
+
+export const url = 'http://localhost:4500';
 
 class App extends React.Component {
   constructor(props) {
@@ -29,7 +29,7 @@ class App extends React.Component {
     Axios({
       method: 'GET',
       withCredentials: true,
-      url: `http://localhost:4500/get-user`
+      url: `${url}/get-user`
     })
       .then(res => {
         console.log(res.data)
@@ -45,7 +45,7 @@ class App extends React.Component {
   login(username, password) {
     Axios({
       method: 'post',
-      url: 'http://localhost:4500/login',
+      url: `${url}/login`,
       withCredentials: true,
       data: {
         username,
@@ -64,7 +64,7 @@ class App extends React.Component {
   register(username, password) {
     Axios({
       method: 'post',
-      url: 'http://localhost:4500/register',
+      url: `${url}/register`,
       withCredentials: true,
       data: {
         username,
@@ -84,7 +84,7 @@ class App extends React.Component {
     Axios({
       method: 'GET',
       withCredentials: true,
-      url: `http://localhost:4500/logout`
+      url: `${url}/logout`
     })
       .then(res => {
         console.log(res.data)

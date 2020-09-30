@@ -13,6 +13,8 @@ import EditWorkoutExerciseModal from './Modals/EditWorkoutExerciseModal';
 import WorkoutDetails from './Workouts/WorkoutDetails';
 import ExerciseList from './Exercises/ExerciseList';
 
+import { url } from '../../App';
+
 class Content extends React.Component {
   constructor(props) {
     super(props);
@@ -56,7 +58,7 @@ class Content extends React.Component {
     Axios({
       method: 'GET',
       withCredentials: true,
-      url: `http://localhost:4500/get-workouts`
+      url: `${url}/get-workouts`
     })
       .then(res => {
         console.log(res.data)
@@ -70,7 +72,7 @@ class Content extends React.Component {
         Axios({
           method: 'GET',
           withCredentials: true,
-          url: `http://localhost:4500/get-exercises`
+          url: `${url}/get-exercises`
         })
           .then(res => {
             console.log(res.data)
@@ -112,7 +114,7 @@ class Content extends React.Component {
   saveNewExercise(name, description, muscleGroup) {
     Axios({
       method: 'POST',
-      url: 'http://localhost:4500/new-exercise',
+      url: `${url}/new-exercise`,
       withCredentials: true,
       data: {
         name,
@@ -132,7 +134,7 @@ class Content extends React.Component {
   saveNewWorkout(name, duration, type) {
     Axios({
       method: 'POST',
-      url: 'http://localhost:4500/new-workout',
+      url: `${url}/new-workout`,
       withCredentials: true,
       data: {
         name,
@@ -152,7 +154,7 @@ class Content extends React.Component {
   addToWorkout(exercise) {
     Axios({
       method: 'POST',
-      url: `http://localhost:4500/add-to-workout/${this.state.workoutToAddTo._id}`,
+      url: `${url}/add-to-workout/${this.state.workoutToAddTo._id}`,
       withCredentials: true,
       data: exercise
     })
@@ -169,7 +171,7 @@ class Content extends React.Component {
   saveEditedExercise(id, name, description, muscleGroup) {
     Axios({
       method: 'POST',
-      url: `http://localhost:4500/edit-exercise/${id}`,
+      url: `${url}/edit-exercise/${id}`,
       withCredentials: true,
       data: {
         name,
@@ -190,7 +192,7 @@ class Content extends React.Component {
   deleteWorkout() {
     Axios({
       method: 'DELETE',
-      url: `http://localhost:4500/workout/${this.state.workoutToDelete._id}`,
+      url: `${url}/workout/${this.state.workoutToDelete._id}`,
       withCredentials: true
     })
       .then(res => {
@@ -207,7 +209,7 @@ class Content extends React.Component {
   removeWorkoutExercise(workoutId, workoutExerciseId) {
     Axios({
       method: 'DELETE',
-      url: `http://localhost:4500/workout-exercise/${workoutExerciseId}/${workoutId}`,
+      url: `${url}/workout-exercise/${workoutExerciseId}/${workoutId}`,
       withCredentials: true
     })
       .then(res => {
@@ -250,7 +252,7 @@ class Content extends React.Component {
   deleteExercise() {
     Axios({
       method: 'DELETE',
-      url: `http://localhost:4500/exercise/${this.state.exerciseToDelete._id}`,
+      url: `${url}/exercise/${this.state.exerciseToDelete._id}`,
       withCredentials: true
     })
       .then(res => {
@@ -286,7 +288,7 @@ class Content extends React.Component {
     Axios({
       method: 'POST',
       withCredentials: true,
-      url: `http://localhost:4500/edit-workout/${this.state.workoutToEdit._id}`,
+      url: `${url}/edit-workout/${this.state.workoutToEdit._id}`,
       data: {
         name,
         duration,
@@ -311,7 +313,7 @@ class Content extends React.Component {
     Axios({
       method: 'POST',
       withCredentials: true,
-      url: `http://localhost:4500/edit-workout-exercise/${this.state.workoutExerciseToEdit.workoutId}/${this.state.workoutExerciseToEdit.workoutExercise._id}`,
+      url: `${url}/edit-workout-exercise/${this.state.workoutExerciseToEdit.workoutId}/${this.state.workoutExerciseToEdit.workoutExercise._id}`,
       data: {
         reps,
         sets,
