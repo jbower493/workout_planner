@@ -86,6 +86,7 @@ class App extends React.Component {
   }
 
   logout() {
+    this.setState({ fetching: true });
     Axios({
       method: 'GET',
       withCredentials: true,
@@ -96,6 +97,7 @@ class App extends React.Component {
         if(res.data.message === 'Successfully logged out') {
           this.setState({ user: null });
         }
+        this.setState({ fetching: false });
       })
   }
 
@@ -119,7 +121,10 @@ class App extends React.Component {
     }
     return (
       <div className="app">
-        <AppNavbar user={this.state.user} logout={this.logout} />
+        <AppNavbar
+          user={this.state.user}
+          logout={this.logout}
+          fetching={this.state.fetching} />
         <Container>
           {content}
         </Container>

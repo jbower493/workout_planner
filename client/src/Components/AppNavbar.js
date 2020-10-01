@@ -6,17 +6,25 @@ import {
   Nav,
   NavItem,
   NavLink,
-  Container
+  Container,
+  Spinner
 } from 'reactstrap';
 
 const AppNavbar = (props) => {
+  let button;
+  if(!props.fetching) {
+    button = <NavLink className="logout-button" onClick={props.logout} >Logout</NavLink>;
+  } else {
+    button = <Spinner size="sm" color="light" />
+  }
+
   return (
     <Navbar className="mb-5" color="dark" dark expand="sm">
       <Container>
         <NavbarBrand>Workout Planner</NavbarBrand>
         <Nav className="ml-auto" navbar>
           {props.user ? <NavItem>
-              <NavLink className="logout-button" onClick={props.logout} >Logout</NavLink>
+              {button}
             </NavItem> : null
           }
         </Nav>
