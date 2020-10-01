@@ -8,11 +8,13 @@ class AuthForm extends React.Component {
     if(this.props.form === 'register') {
       form = <Register
         register={this.props.register}
-        toggleAuth={this.props.toggleAuth} />
+        toggleAuth={this.props.toggleAuth}
+        fetching={this.props.fetching} />
     } else if(this.props.form === 'login') {
       form = <Login
         login={this.props.login}
-        toggleAuth={this.props.toggleAuth} />
+        toggleAuth={this.props.toggleAuth}
+        fetching={this.props.fetching} />
     } else {
       form = null;
     }

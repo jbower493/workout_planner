@@ -7,7 +7,7 @@ import AppNavbar from './Components/AppNavbar';
 import AuthForm from './Components/Auth/AuthForm';
 import Content from './Components/Content/Content';
 
-import { Container} from 'reactstrap';
+import { Container, Spinner } from 'reactstrap';
 
 export const url = 'http://localhost:4500';
 
@@ -17,7 +17,8 @@ class App extends React.Component {
     this.state = {
       loading: true,
       user: null,
-      form: 'login'
+      form: 'login',
+      fetching: false
     };
     this.login = this.login.bind(this);
     this.register = this.register.bind(this);
@@ -43,6 +44,7 @@ class App extends React.Component {
   }
 
   login(username, password) {
+    this.setState({ fetching: true });
     Axios({
       method: 'post',
       url: `${url}/login`,
@@ -58,10 +60,12 @@ class App extends React.Component {
         if(res.data.user) {
           this.setState({ user: res.data.user });
         }
+        this.setState({ fetching: false });
       })
   }
 
   register(username, password) {
+    this.setState({ fetching: true });
     Axios({
       method: 'post',
       url: `${url}/register`,
@@ -77,6 +81,7 @@ class App extends React.Component {
         if(res.data.message === 'New user created') {
           this.setState({ form: 'login' });
         }
+        this.setState({ fetching: false });
       })
   }
 
@@ -101,7 +106,7 @@ class App extends React.Component {
   render() {
     let content;
     if(this.state.loading) {
-      content = <div>Loading...</div>
+      content = <div className="loading"><Spinner size="md" color="secondary" /></div>
     } else if(this.state.user) {
       content = <Content user={this.state.user} />;
     } else {
@@ -109,7 +114,8 @@ class App extends React.Component {
         form={this.state.form}
         toggleAuth={this.toggleAuth}
         login={this.login}
-        register={this.register} />;
+        register={this.register}
+        fetching={this.state.fetching} />;
     }
     return (
       <div className="app">

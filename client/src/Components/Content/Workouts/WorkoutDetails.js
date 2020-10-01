@@ -45,6 +45,7 @@ class WorkoutDetails extends React.Component {
                     <CardSubtitle className="text-primary mb-1">
                       <span className="mr-3">Reps: {exercise.reps}</span>
                       <span>Sets: {exercise.sets}</span>
+                      <p>Weight: {exercise.weight}</p>
                     </CardSubtitle>
                     <CardText>{exercise.exercise.description}</CardText>
                   </CardBody>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { Modal, ModalHeader, ModalBody, ModalFooter, Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Modal, ModalHeader, ModalBody, ModalFooter, Button, Form, FormGroup, Label, Input, Spinner } from 'reactstrap';
 
 const EditWorkoutModal = (props) => {
   const [name, setName] = useState(props.workoutToEdit.name);
@@ -10,6 +10,18 @@ const EditWorkoutModal = (props) => {
   const editWorkout = e => {
     props.editWorkout(name, duration, type);
   };
+
+  let button;
+  if(props.fetching) {
+    button = <ModalFooter>
+        <Spinner size="sm" color="secondary" />
+      </ModalFooter>;
+  } else {
+    button = <ModalFooter>
+        <Button onClick={editWorkout}>Save</Button>
+        <Button onClick={props.closeModal}>Cancel</Button>
+      </ModalFooter>;
+  }
 
   return (
     <div className="page-cover">
@@ -31,10 +43,7 @@ const EditWorkoutModal = (props) => {
             </FormGroup>
           </Form>
         </ModalBody>
-        <ModalFooter>
-          <Button onClick={editWorkout}>Save</Button>
-          <Button onClick={props.closeModal}>Cancel</Button>
-        </ModalFooter>
+        {button}
       </Modal>
     </div>
   )

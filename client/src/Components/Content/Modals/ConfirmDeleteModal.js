@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
+import { Modal, ModalHeader, ModalBody, ModalFooter, Button, Spinner } from 'reactstrap';
 
 const ConfirmDeleteModal = (props) => {
   let title;
@@ -17,6 +17,18 @@ const ConfirmDeleteModal = (props) => {
     proceedFunc = props.deleteExercise;
   }
 
+  let button;
+  if(props.fetching) {
+    button = <ModalFooter>
+        <Spinner size="sm" color="secondary" />
+      </ModalFooter>;
+  } else {
+    button = <ModalFooter>
+        <Button onClick={proceedFunc}>Delete</Button>
+        <Button onClick={props.closeModal}>Cancel</Button>
+      </ModalFooter>;
+  }
+
   return (
     <div className="page-cover">
       <Modal isOpen={true}>
@@ -24,10 +36,7 @@ const ConfirmDeleteModal = (props) => {
         <ModalBody>
           <p>{message}</p>
         </ModalBody>
-        <ModalFooter>
-          <Button onClick={proceedFunc}>Delete</Button>
-          <Button onClick={props.closeModal}>Cancel</Button>
-        </ModalFooter>
+        {button}
       </Modal>
     </div>
   )

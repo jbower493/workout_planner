@@ -30,7 +30,8 @@ class WorkoutList extends React.Component {
           showAddToWorkout={this.showAddToWorkout}
           showDeleteModal={this.props.showDeleteModal}
           removeWorkoutExercise={this.removeWorkoutExercise}
-          viewWorkout={this.viewWorkout} />)
+          viewWorkout={this.viewWorkout}
+          fetching={this.props.fetching} />)
         }
       </div>
     )

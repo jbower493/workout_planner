@@ -41,7 +41,8 @@ const Workout = (props) => {
               key={props.workout.exercises.indexOf(exercise)}
               exercise={exercise}
               workoutId={props.workout._id}
-              removeWorkoutExercise={removeWorkoutExercise} />)
+              removeWorkoutExercise={removeWorkoutExercise}
+              fetching={props.fetching} />)
           }
         </Collapse>
       </ListGroup>

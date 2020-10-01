@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Modal, ModalHeader, ModalBody, ModalFooter, Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Modal, ModalHeader, ModalBody, ModalFooter, Button, Form, FormGroup, Label, Input, Spinner } from 'reactstrap';
 
 class NewWorkoutModal extends React.Component {
   constructor(props) {
@@ -33,6 +33,18 @@ class NewWorkoutModal extends React.Component {
   }
 
   render() {
+    let button;
+    if(this.props.fetching) {
+      button = <ModalFooter>
+          <Spinner size="sm" color="secondary" />
+        </ModalFooter>;
+    } else {
+      button = <ModalFooter>
+          <Button onClick={this.saveNewWorkout}>Save</Button>
+          <Button onClick={this.props.closeModal}>Cancel</Button>
+        </ModalFooter>;
+    }
+
     return (
       <div className="page-cover">
         <Modal isOpen={true}>
@@ -53,10 +65,7 @@ class NewWorkoutModal extends React.Component {
               </FormGroup>
             </Form>
           </ModalBody>
-          <ModalFooter>
-            <Button onClick={this.saveNewWorkout}>Save</Button>
-            <Button onClick={this.props.closeModal}>Cancel</Button>
-          </ModalFooter>
+          {button}
         </Modal>
       </div>
     )

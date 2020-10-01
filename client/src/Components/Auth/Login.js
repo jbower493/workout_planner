@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input, Spinner } from 'reactstrap';
 
 const Login = (props) => {
   const [username, setUsername] = useState('');
@@ -9,6 +9,13 @@ const Login = (props) => {
   const login = (e) => {
     props.login(username, password);
   };
+
+  let button;
+  if(props.fetching) {
+    button = <Spinner size="sm" color="secondary" />
+  } else {
+    button = <Button className="auth-button" onClick={login} >Login</Button>
+  }
 
   return (
     <Form>
@@ -21,7 +28,7 @@ const Login = (props) => {
         <Label>Password</Label>
         <Input type="password" placeholder="password" onChange={e => setPassword(e.target.value)} />
       </FormGroup>
-      <Button className="auth-button" onClick={login} >Login</Button>
+      {button}
       <p className="toggle-auth text-primary mt-2" onClick={props.toggleAuth} >Register</p>
     </Form>
   )

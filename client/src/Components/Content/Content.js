@@ -13,6 +13,8 @@ import EditWorkoutExerciseModal from './Modals/EditWorkoutExerciseModal';
 import WorkoutDetails from './Workouts/WorkoutDetails';
 import ExerciseList from './Exercises/ExerciseList';
 
+import { Spinner } from 'reactstrap';
+
 import { url } from '../../App';
 
 class Content extends React.Component {
@@ -20,6 +22,7 @@ class Content extends React.Component {
     super(props);
     this.state = {
       loading: true,
+      fetching: false,
       modal: false,
       page: 'workout list',
       workouts: [],
@@ -112,6 +115,7 @@ class Content extends React.Component {
   }
 
   saveNewExercise(name, description, muscleGroup) {
+    this.setState({ fetching: true });
     Axios({
       method: 'POST',
       url: `${url}/new-exercise`,
@@ -128,10 +132,12 @@ class Content extends React.Component {
           this.setState({ modal: false });
           this.resetState()
         }
+        this.setState({ fetching: false });
       })
   }
 
   saveNewWorkout(name, duration, type) {
+    this.setState({ fetching: true });
     Axios({
       method: 'POST',
       url: `${url}/new-workout`,
@@ -147,11 +153,13 @@ class Content extends React.Component {
         if(res.data.success) {
           this.setState({ modal: false });
         }
+        this.setState({ fetching: false });
         this.resetState()
       })
   }
 
   addToWorkout(exercise) {
+    this.setState({ fetching: true });
     Axios({
       method: 'POST',
       url: `${url}/add-to-workout/${this.state.workoutToAddTo._id}`,
@@ -164,11 +172,13 @@ class Content extends React.Component {
           modal: false,
           workoutToAddTo: null
         });
+        this.setState({ fetching: false });
         this.resetState();
       })
   }
 
   saveEditedExercise(id, name, description, muscleGroup) {
+    this.setState({ fetching: true });
     Axios({
       method: 'POST',
       url: `${url}/edit-exercise/${id}`,
@@ -185,11 +195,13 @@ class Content extends React.Component {
           modal: false,
           exerciseToEdit: null
         });
+        this.setState({ fetching: false });
         this.resetState();
       })
   }
 
   deleteWorkout() {
+    this.setState({ fetching: true });
     Axios({
       method: 'DELETE',
       url: `${url}/workout/${this.state.workoutToDelete._id}`,
@@ -201,12 +213,14 @@ class Content extends React.Component {
             modal: false,
             workoutToDelete: null
           });
+          this.setState({ fetching: false });
           this.resetState();
         }
       })
   }
 
   removeWorkoutExercise(workoutId, workoutExerciseId) {
+    this.setState({ fetching: true });
     Axios({
       method: 'DELETE',
       url: `${url}/workout-exercise/${workoutExerciseId}/${workoutId}`,
@@ -216,6 +230,7 @@ class Content extends React.Component {
         if(res.data.success) {
           this.resetState();
         }
+        this.setState({ fetching: false });
       })
   }
 
@@ -250,6 +265,7 @@ class Content extends React.Component {
   }
 
   deleteExercise() {
+    this.setState({ fetching: true });
     Axios({
       method: 'DELETE',
       url: `${url}/exercise/${this.state.exerciseToDelete._id}`,
@@ -264,6 +280,7 @@ class Content extends React.Component {
           });
           this.resetState();
         }
+        this.setState({ fetching: false });
       })
   }
 
@@ -285,6 +302,7 @@ class Content extends React.Component {
   }
 
   editWorkout(name, duration, type) {
+    this.setState({ fetching: true });
     Axios({
       method: 'POST',
       withCredentials: true,
@@ -305,11 +323,13 @@ class Content extends React.Component {
           });
           this.resetState(id);
         }
+        this.setState({ fetching: false });
         console.log(res.data);
       })
   }
 
   editWorkoutExercise(reps, sets, weight) {
+    this.setState({ fetching: true });
     Axios({
       method: 'POST',
       withCredentials: true,
@@ -330,13 +350,16 @@ class Content extends React.Component {
           });
           this.resetState(id);
         }
+        this.setState({ fetching: false });
         console.log(res.data);
       })
   }
 
   render() {
     let page = null;
-    if(this.state.page === 'workout list') {
+    if(this.state.loading) {
+      page = <div className="loading"><Spinner size="md" color="secondary" /></div>
+    } else if(this.state.page === 'workout list') {
       page = <div>
         <AddButtons
           showNewExercise={this.showNewExercise}
@@ -349,7 +372,8 @@ class Content extends React.Component {
           showAddToWorkout={this.showAddToWorkout}
           showDeleteModal={this.showDeleteModal}
           removeWorkoutExercise={this.removeWorkoutExercise}
-          viewWorkout={this.viewWorkout} />
+          viewWorkout={this.viewWorkout}
+          fetching={this.state.fetching} />
       </div>;
     } else if(this.state.page === 'workout details') {
       page = <WorkoutDetails
@@ -373,33 +397,47 @@ class Content extends React.Component {
 
     let modal = null;
     if(this.state.modal === 'new exercise') {
-      modal = <NewExerciseModal saveNewExercise={this.saveNewExercise} closeModal={this.closeModal} />;
+      modal = <NewExerciseModal
+        saveNewExercise={this.saveNewExercise}
+        closeModal={this.closeModal}
+        fetching={this.state.fetching} />;
     } else if(this.state.modal === 'new workout') {
-      modal = <NewWorkoutModal saveNewWorkout={this.saveNewWorkout} closeModal={this.closeModal} />;
+      modal = <NewWorkoutModal
+        saveNewWorkout={this.saveNewWorkout}
+        closeModal={this.closeModal}
+        fetching={this.state.fetching} />;
     } else if(this.state.modal === 'add to workout') {
-      modal = <AddToWorkout addToWorkout={this.addToWorkout} exercises={this.state.exercises} closeModal={this.closeModal} />
+      modal = <AddToWorkout
+        addToWorkout={this.addToWorkout}
+        exercises={this.state.exercises}
+        closeModal={this.closeModal}
+        fetching={this.state.fetching} />
     } else if(this.state.modal === 'edit exercise') {
       modal = <EditExerciseModal
         exercise={this.state.exerciseToEdit}
         saveEditedExercise={this.saveEditedExercise}
-        closeModal={this.closeModal} />
+        closeModal={this.closeModal}
+        fetching={this.state.fetching} />
     } else if(this.state.modal === 'confirm delete') {
       modal = <ConfirmDeleteModal
         exerciseToDelete={this.state.exerciseToDelete}
         workoutToDelete={this.state.workoutToDelete}
         deleteWorkout={this.deleteWorkout}
         deleteExercise={this.deleteExercise}
-        closeModal={this.closeModal} />
+        closeModal={this.closeModal}
+        fetching={this.state.fetching} />
     } else if(this.state.modal === 'edit workout') {
       modal = <EditWorkoutModal
         workoutToEdit={this.state.workoutToEdit}
         editWorkout={this.editWorkout}
-        closeModal={this.closeModal} />;
+        closeModal={this.closeModal}
+        fetching={this.state.fetching} />;
     } else if(this.state.modal === 'edit workout exercise') {
       modal = <EditWorkoutExerciseModal
         workoutExerciseToEdit={this.state.workoutExerciseToEdit}
         editWorkoutExercise={this.editWorkoutExercise}
-        closeModal={this.closeModal} />;
+        closeModal={this.closeModal}
+        fetching={this.state.fetching} />;
     }
 
     return (
