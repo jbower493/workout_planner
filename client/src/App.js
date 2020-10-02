@@ -10,6 +10,7 @@ import Content from './Components/Content/Content';
 import { Container, Spinner } from 'reactstrap';
 
 export const url = 'http://localhost:4500';
+//export const url = 'https://jbwebsites.work/api';
 
 class App extends React.Component {
   constructor(props) {

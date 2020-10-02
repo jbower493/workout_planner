@@ -1,1 +1,13 @@
-GET http://159.65.90.239:4500/get-user HTTP/1.1
+POST https://jbwebsites.work/api/login HTTP/1.1
+content-type: application/json
+Authorization: jamie
+
+{
+    "username": "Jamie",
+    "password": "jamiejamie"
+}
+
+###
+
+GET https://jbwebsites.work/api/get-user HTTP/1.1
+Authorization: jamie
