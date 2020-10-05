@@ -9,17 +9,14 @@ import Content from './Components/Content/Content';
 
 import { Container, Spinner } from 'reactstrap';
 
-
-
-import { x } from './redux/store';
-console.log(x);
-
+import { connect } from 'react-redux';
+import { getUser } from './redux/actions/authActions';
 
 
 export const url = 'http://localhost:4500';
 //export const url = 'https://jbwebsites.work/api';
 
-
+/*
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -140,6 +137,31 @@ class App extends React.Component {
       </div>
     )
   }
-};
+};*/
 
-export default App;
+class App extends React.Component {
+  componentDidMount() {
+    this.props.getUser();
+    console.log(this.props.user);
+  }
+
+  render() {
+    return (
+      <div className="app">
+        <Container>
+          {this.props.user ? <h1>{this.props.user.username}</h1> : <h1>undefined</h1>}
+          <hr/>
+          <AuthForm />
+        </Container>
+      </div>
+    )
+  }
+}
+
+const mapStateToProps = state => ({
+  user: state.auth.user
+});
+
+const mapDispatchToProps = { getUser };
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

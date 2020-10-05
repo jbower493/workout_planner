@@ -2,6 +2,7 @@ import React from 'react';
 import Login from './Login.js';
 import Register from './Register';
 
+/*
 class AuthForm extends React.Component {
   render() {
     let form;
@@ -21,6 +22,21 @@ class AuthForm extends React.Component {
 
     return (
       form
+    )
+  }
+};*/
+
+class AuthForm extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return (
+      <div>
+        <Login />
+        <Register />
+    </div>
     )
   }
 };
