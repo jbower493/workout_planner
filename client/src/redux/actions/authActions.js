@@ -1,13 +1,7 @@
-import { GET_USER, LOGIN, REGISTER, LOGOUT, REQUESTING_DATA } from './types';
+import { GET_USER, LOGIN, REGISTER, LOGOUT } from './types';
 import Axios from 'axios';
 
 import { url } from '../../App';
-
-const requestingData = () => {
-  return {
-    type: REQUESTING_DATA
-  }
-};
 
 const getUserAC = (user) => {
   return {
@@ -42,7 +36,6 @@ const loginAC = (user) => {
 
 export const login = (credentials) => {
   return dispatch => {
-    dispatch(requestingData());
     Axios({
       method: 'post',
       url: `${url}/login`,
