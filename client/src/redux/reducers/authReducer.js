@@ -1,18 +1,45 @@
-import { GET_USER, LOGIN, REGISTER, LOGOUT } from '../actions/types';
+import { GET_USER, LOGIN, REGISTER, LOGOUT, REQUESTING_DATA, RECEIVED_DATA, SHOW_REGISTER, SHOW_LOGIN } from '../actions/types';
 
-const authReducer = (state = {}, action) => {
+const initialState = {
+  loading: false,
+  user: null,
+  form: 'login'
+};
+
+const authReducer = (state = initialState, action) => {
   switch(action.type) {
-    case GET_USER:
-      return Object.assign({}, state, { user: action.user });
-    case LOGIN:
+    case SHOW_REGISTER:
       return {
-        user: action.user,
-      }
-    case REGISTER:
+        ...state,
+        form: 'register'
+      };
+    case SHOW_LOGIN:
+      return {
+        ...state,
+        form: 'login'
+      };
+    case REQUESTING_DATA:
+      return {
+        ...state,
+        loading: true
+      };
+    case RECEIVED_DATA:
+      return {
+        ...state,
+        loading: false
+      };
+    case LOGIN:
+    case GET_USER:
+      return {
+        ...state,
+        user: action.payload
+      };
     case LOGOUT:
       return {
-        user: action.user
-      }
+        ...state,
+        user: null
+      };
+    case REGISTER:
     default:
       return state;
   }

@@ -1,5 +1,8 @@
 import React from 'react';
 
+import { connect } from 'react-redux';
+import { logout } from '../redux/actions/authActions';
+
 import {
   Navbar,
   NavbarBrand,
@@ -12,7 +15,7 @@ import {
 
 const AppNavbar = (props) => {
   let button;
-  if(!props.fetching) {
+  if(!props.loading) {
     button = <NavLink className="logout-button" onClick={props.logout} >Logout</NavLink>;
   } else {
     button = <Spinner size="sm" color="light" />
@@ -33,4 +36,11 @@ const AppNavbar = (props) => {
   )
 };
 
-export default AppNavbar;
+const mapStateToProps = state => {
+  return {
+    user: state.auth.user,
+    loading: state.auth.loading
+  }
+};
+
+export default connect(mapStateToProps, { logout })(AppNavbar);
