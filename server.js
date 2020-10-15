@@ -49,6 +49,7 @@ app.use(cors({
   credentials: true
 }));
 app.use(express.json());
+//app.use(express.urlencoded({ extended: false }));
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -74,7 +75,7 @@ app.post('/new-exercise', (req, res, next) => {
     .catch(e => res.send({ success: false }));
 });
 
-app.post('/edit-exercise/:exerciseId', (req, res, next) => {
+app.post('/edit-exercise/:exerciseId', checkPermissions, (req, res, next) => {
   Exercise.findByIdAndUpdate(req.params.exerciseId, {
     name: req.body.name,
     description: req.body.description,
