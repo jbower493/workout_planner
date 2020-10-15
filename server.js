@@ -74,7 +74,7 @@ app.post('/new-exercise', (req, res, next) => {
     })
     .catch(e => res.send({ success: false }));
 });
-
+//hi
 app.post('/edit-exercise/:exerciseId', checkPermissions, (req, res, next) => {
   Exercise.findByIdAndUpdate(req.params.exerciseId, {
     name: req.body.name,
