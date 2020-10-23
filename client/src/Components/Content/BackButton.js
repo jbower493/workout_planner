@@ -4,7 +4,7 @@ import { Button } from 'reactstrap';
 
 const BackButton = (props) => {
   return (
-    <Button className="mb-4" onClick={props.backToDashboard}>Back to dashboard</Button>
+    <Button color="primary" className="mb-4" onClick={props.backToDashboard}>Back to dashboard</Button>
   )
 };
 

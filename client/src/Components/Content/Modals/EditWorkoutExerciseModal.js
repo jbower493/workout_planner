@@ -18,8 +18,8 @@ const EditWorkoutExerciseModal = (props) => {
       </ModalFooter>;
   } else {
     button = <ModalFooter>
-        <Button onClick={editWorkoutExercise}>Save</Button>
-        <Button onClick={props.closeModal}>Cancel</Button>
+        <Button color="primary" onClick={editWorkoutExercise}>Save</Button>
+        <Button color="danger" onClick={props.closeModal}>Cancel</Button>
       </ModalFooter>;
   }
 

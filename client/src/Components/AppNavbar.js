@@ -1,5 +1,10 @@
 import React from 'react';
 
+import { connect } from 'react-redux';
+import { logout } from '../redux/actions/authActions';
+
+import { MdFitnessCenter, MdPerson } from "react-icons/md";
+
 import {
   Navbar,
   NavbarBrand,
@@ -12,8 +17,8 @@ import {
 
 const AppNavbar = (props) => {
   let button;
-  if(!props.fetching) {
-    button = <NavLink className="logout-button" onClick={props.logout} >Logout</NavLink>;
+  if(!props.loading) {
+    button = <NavLink className="logout-button d-flex align-items-center" onClick={props.logout} >Logout<MdPerson className="ml-1" /></NavLink>;
   } else {
     button = <Spinner size="sm" color="light" />
   }
@@ -21,7 +26,7 @@ const AppNavbar = (props) => {
   return (
     <Navbar className="mb-5" color="dark" dark expand="sm">
       <Container>
-        <NavbarBrand>Workout Planner</NavbarBrand>
+        <NavbarBrand>Workout Planner<MdFitnessCenter className="ml-2" /></NavbarBrand>
         <Nav className="ml-auto" navbar>
           {props.user ? <NavItem>
               {button}
@@ -33,4 +38,11 @@ const AppNavbar = (props) => {
   )
 };
 
-export default AppNavbar;
+const mapStateToProps = state => {
+  return {
+    user: state.auth.user,
+    loading: state.auth.loading
+  }
+};
+
+export default connect(mapStateToProps, { logout })(AppNavbar);

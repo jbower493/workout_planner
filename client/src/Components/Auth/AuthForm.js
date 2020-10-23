@@ -2,27 +2,14 @@ import React from 'react';
 import Login from './Login.js';
 import Register from './Register';
 
-class AuthForm extends React.Component {
-  render() {
-    let form;
-    if(this.props.form === 'register') {
-      form = <Register
-        register={this.props.register}
-        toggleAuth={this.props.toggleAuth}
-        fetching={this.props.fetching} />
-    } else if(this.props.form === 'login') {
-      form = <Login
-        login={this.props.login}
-        toggleAuth={this.props.toggleAuth}
-        fetching={this.props.fetching} />
-    } else {
-      form = null;
-    }
 
-    return (
-      form
-    )
-  }
+const AuthForm = () => {
+  return (
+    <div className="auth-form">
+      <Login />
+      <Register />
+    </div>
+  )
 };
 
 export default AuthForm;

@@ -40,8 +40,8 @@ class NewWorkoutModal extends React.Component {
         </ModalFooter>;
     } else {
       button = <ModalFooter>
-          <Button onClick={this.saveNewWorkout}>Save</Button>
-          <Button onClick={this.props.closeModal}>Cancel</Button>
+          <Button color="primary" onClick={this.saveNewWorkout}>Save</Button>
+          <Button color="danger" onClick={this.props.closeModal}>Cancel</Button>
         </ModalFooter>;
     }
 
@@ -61,7 +61,13 @@ class NewWorkoutModal extends React.Component {
               </FormGroup>
               <FormGroup>
                 <Label>Type</Label>
-                <Input type="text" placeholder="Type" onChange={this.setType} />
+                <Input type="select" onChange={this.setType}>
+                  <option>Upper body</option>
+                  <option>Lower body</option>
+                  <option>Cardio</option>
+                  <option>Flexibility</option>
+                  <option>All round</option>
+                </Input>
               </FormGroup>
             </Form>
           </ModalBody>

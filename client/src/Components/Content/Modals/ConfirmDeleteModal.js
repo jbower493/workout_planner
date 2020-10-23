@@ -24,8 +24,8 @@ const ConfirmDeleteModal = (props) => {
       </ModalFooter>;
   } else {
     button = <ModalFooter>
-        <Button onClick={proceedFunc}>Delete</Button>
-        <Button onClick={props.closeModal}>Cancel</Button>
+        <Button color="danger" onClick={proceedFunc}>Delete</Button>
+        <Button color="primary" onClick={props.closeModal}>No, go back</Button>
       </ModalFooter>;
   }
 

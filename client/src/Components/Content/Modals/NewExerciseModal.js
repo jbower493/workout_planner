@@ -40,8 +40,8 @@ class NewExerciseModal extends React.Component {
         </ModalFooter>;
     } else {
       button = <ModalFooter>
-          <Button onClick={this.saveNewExercise}>Save</Button>
-          <Button onClick={this.props.closeModal}>Cancel</Button>
+          <Button color="primary" onClick={this.saveNewExercise}>Save</Button>
+          <Button color="danger" onClick={this.props.closeModal}>Cancel</Button>
         </ModalFooter>;
     }
 
