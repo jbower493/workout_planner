@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Button, Form, FormGroup, Label, Input, Spinner } from 'reactstrap';
 
 import { connect } from 'react-redux';
-import { register } from '../../redux/actions/authActions';
+import { register, showLogin } from '../../redux/actions/authActions';
 
 const Register = (props) => {
   const [username, setUsername] = useState('');
@@ -13,15 +13,11 @@ const Register = (props) => {
     props.register({ username, password });
   };
 
-  const toggleAuth = () => {
-    console.log(props.user, props.loading, props.form)
-  };
-
   let button;
   if(props.fetching) {
     button = <Spinner size="sm" color="secondary" />
   } else {
-    button = <Button className="auth-button" onClick={register} >Register</Button>
+    button = <Button color="primary" className="auth-button" onClick={register} >Register</Button>
   }
 
   if(props.form === 'register') {
@@ -30,14 +26,14 @@ const Register = (props) => {
         <h2>Register</h2>
         <FormGroup>
           <Label>Username</Label>
-          <Input type="text" placeholder="username" onChange={e => setUsername(e.target.value)} />
+          <Input type="text" value={username} placeholder="username" onChange={e => setUsername(e.target.value)} />
         </FormGroup>
         <FormGroup>
           <Label>Password</Label>
-          <Input type="password" placeholder="password" onChange={e => setPassword(e.target.value)} />
+          <Input type="password" value={password} placeholder="password" onChange={e => setPassword(e.target.value)} />
         </FormGroup>
         {button}
-        <p className="toggle-auth text-primary mt-2" onClick={toggleAuth} >Login</p>
+        <p className="toggle-auth text-primary mt-2" onClick={props.showLogin} >Login</p>
       </Form>
     )
   } else {
@@ -53,4 +49,4 @@ const mapStateToProps = state => ({
 
 //const mapDispatchToProps = { register };
 
-export default connect(mapStateToProps, { register })(Register);
+export default connect(mapStateToProps, { register, showLogin })(Register);

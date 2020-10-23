@@ -16,12 +16,12 @@ const WorkoutExercise = (props) => {
   if(props.fetching && removing) {
     button = <Spinner size="sm" color="secondary" />
   } else {
-    button = <Button color="secondary" onClick={removeWorkoutExercise}>Remove from workout</Button>;
+    button = <Button color="danger" onClick={removeWorkoutExercise}>Remove from workout</Button>;
   }
 
   return (
     <ListGroupItem className="workout-exercise d-flex justify-content-between align-items-center">
-      <p>{props.exercise.exercise.name}</p>
+      <div>{props.exercise.exercise.name}</div>
       {button}
     </ListGroupItem>
   )

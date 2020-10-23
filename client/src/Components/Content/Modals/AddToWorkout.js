@@ -25,8 +25,8 @@ const AddToWorkout = (props) => {
       </ModalFooter>;
   } else {
     button = <ModalFooter>
-        <Button onClick={addToWorkout}>Save</Button>
-        <Button onClick={props.closeModal}>Cancel</Button>
+        <Button color="primary" onClick={addToWorkout}>Save</Button>
+        <Button color="danger" onClick={props.closeModal}>Cancel</Button>
       </ModalFooter>;
   }
 
@@ -36,7 +36,7 @@ const AddToWorkout = (props) => {
         <ModalHeader>Choose an exercise to add</ModalHeader>
         <ModalBody>
           <Form>
-            <FormGroup tag="fieldset">
+            <FormGroup className="list-to-add" tag="fieldset">
               {props.exercises.map(ex => {
                 return (
                   <FormGroup key={props.exercises.indexOf(ex)} check>

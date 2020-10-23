@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
 import WorkoutExercise from './WorkoutExercise';
 
-import { ListGroup, ListGroupItem, Button, Collapse } from 'reactstrap';
+import { ListGroup, ListGroupItem, Collapse, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap';
+
+import { MdMoreHoriz, MdExpandMore } from "react-icons/md";
 
 const Workout = (props) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
+
+  const toggleDropdown = () => setDropdownOpen(prevState => !prevState);
 
   const showAddToWorkout = e => {
     props.showAddToWorkout(props.workout);
@@ -27,13 +32,29 @@ const Workout = (props) => {
   return (
     <div>
       <ListGroup className="mb-3">
-        <ListGroupItem color="primary" className="workout-title stack d-flex justify-content-between align-items-center">
-          <h4 className="workout-name" onClick={toggle} >{props.workout.name} <i className="fas fa-caret-down"></i></h4>
-          <div className="end-section">
-            <Button color="secondary" className="stack-button" onClick={viewWorkout}>Workout details</Button>
-            <Button color="secondary" className="stack-button middle-button" onClick={showAddToWorkout} >Add exercise</Button>
-            <Button color="secondary" className="stack-button" onClick={showDeleteModal}>Delete workout</Button>
+        <ListGroupItem className="workout-title bg-light d-flex justify-content-between align-items-center">
+          <div className="start-section d-flex">
+            <div className="workout-name fs-large">{props.workout.name}</div>
+            <div className="workout-type-holder">
+              <div>Type: <span className="workout-type text-primary">{props.workout.type}</span></div>
+            </div>
+            <div className="exercises-dropdown pointer" onClick={toggle}>Exercises <MdExpandMore /></div>
           </div>
+          <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
+            <DropdownToggle
+              tag="span"
+              data-toggle="dropdown"
+              aria-expanded={dropdownOpen}>
+              <MdMoreHoriz className="more-button scale-2 pointer" />
+            </DropdownToggle>
+            <DropdownMenu right>
+              <DropdownItem onClick={viewWorkout}>Workout details</DropdownItem>
+              <DropdownItem divider/>
+              <DropdownItem onClick={showAddToWorkout}>Add exercise</DropdownItem>
+              <DropdownItem divider/>
+              <DropdownItem onClick={showDeleteModal}>Delete workout</DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
         </ListGroupItem>
         <Collapse isOpen={isOpen}>
           {

@@ -8,8 +8,8 @@ const AddButtons = (props) => {
   return (
     <div className="button-holder mb-4 d-flex justify-content-between align-items-end">
       <div className="new-buttons">
-        <Button className="mr-3 top-new-button" onClick={props.showNewExercise} >New Exercise</Button>
-        <Button onClick={props.showNewWorkout} >New Workout</Button>
+        <Button color="primary" className="mr-3 top-new-button" onClick={props.showNewExercise} >New Exercise</Button>
+        <Button color="primary" onClick={props.showNewWorkout} >New Workout</Button>
       </div>
       <div className="toggle-lists">
         <span

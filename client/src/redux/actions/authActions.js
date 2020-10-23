@@ -45,6 +45,18 @@ const logoutAC = () => {
   }
 };
 
+export const showRegister = () => {
+  return (dispatch) => {
+    dispatch(showRegisterAC());
+  }
+};
+
+export const showLogin = () => {
+  return (dispatch) => {
+    dispatch(showLoginAC());
+  }
+};
+
 export const getUser = () => {
   return (dispatch) => {
     dispatch(requestingDataAC());

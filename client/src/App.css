@@ -6,7 +6,36 @@
   align-items: center;
 }
 
-.text-body, p .text-primary, .workout-name, .logout-button, .toggle-auth, .pointer {
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.body {
+  flex: 1;
+}
+
+footer {
+  color: white;
+  text-align: center;
+  padding: 30px;
+  margin-top: 30px;
+}
+
+.fs-large {
+  font-size: 1.35rem;
+}
+
+.scale-2 {
+  transform: scale(2);
+}
+
+.scale-3 {
+  transform: scale(3);
+}
+
+.text-body, p .text-primary, .logout-button, .toggle-auth, .pointer {
   cursor: pointer;
 }
 
@@ -14,26 +43,63 @@
   margin: 0 1rem;
 }
 
+.list-to-add {
+  max-height: 20vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+/* auth form */
+
+.auth-form {
+  width: 400px;
+  margin: 0 auto;
+}
+
+/* workouts */
+
+.start-section {
+  align-items: center;
+}
+
+.workout-name {
+  width: 290px;
+}
+
+.workout-type-holder {
+  width: 190px;
+}
+
+.more-button {
+  color: #428bca;
+}
+
+/* workout details */
+
+.details-edit-button {
+  height: fit-content;
+}
+
+/* exercises */
+
+.exercise-description {
+  margin-top: 10px;
+}
+
 @media (max-width: 900px) {
-  .auth-button {
-    width: 100%;
+  /* workouts */
+
+  .start-section {
+    flex-direction: column;
+    align-items: flex-start;
   }
 
-  .stack {
-    flex-direction: column;
+  .workout-name {
+    width: fit-content;
   }
   
-  .workout-name, .exercise-name, .end-section {
-    width: 100%;
-  }
-
-  .end-section {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .stack-button {
-    margin: 10px 0 0 0;
+  .workout-type-holder {
+    width: fit-content;
   }
 
   .new-buttons {
@@ -49,6 +115,18 @@
   .toggle-lists {
     flex: 1;
     text-align: right;
+  }
+}
+
+@media (max-width: 500px) {
+  /* auth form */
+
+  .auth-form {
+    width: 100%;
+  }
+
+  .auth-button {
+    width: 100%;
   }
 }
 

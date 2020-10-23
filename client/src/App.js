@@ -1,6 +1,5 @@
 import React from 'react';
 import './App.css';
-import Axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import AppNavbar from './Components/AppNavbar';
@@ -33,10 +32,15 @@ class App extends React.Component {
     }
     return (
       <div className="app">
-        <AppNavbar />
-        <Container>
-          {content}
-        </Container>
+        <AppNavbar className="nav" />
+        <div class="body">
+          <Container>
+            {content}
+          </Container>
+        </div>
+        <footer className="bg-dark">
+          <div>Website designed and built by <a href="https://jbdev.netlify.app" target="_blank" rel="noopener noreferrer">Jamie Bower</a></div>
+        </footer>
       </div>
     )
   }

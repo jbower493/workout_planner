@@ -4,6 +4,8 @@ import BackButton from '../BackButton';
 
 import { Button, ListGroupItem, Card, CardTitle, CardText, CardSubtitle, CardBody, CardHeader, CardFooter } from 'reactstrap';
 
+import { MdWatchLater } from "react-icons/md";
+
 class WorkoutDetails extends React.Component {
   constructor(props) {
     super(props);
@@ -19,15 +21,13 @@ class WorkoutDetails extends React.Component {
       <div>
         <BackButton backToDashboard={this.props.backToDashboard} />
         
-        <ListGroupItem color="primary" className="d-flex justify-content-between">
+        <ListGroupItem className="bg-light d-flex justify-content-between">
           <div>
-            <h4>{this.props.workout.name}</h4>
-            <Button color="secondary" onClick={this.showEditWorkoutModal}>Edit</Button>
+            <div className="fs-large">{this.props.workout.name}</div>
+            <div>Type: <span className="text-primary">{this.props.workout.type}</span></div>
+            <div className="d-flex align-items-center"><MdWatchLater className="mr-1" /> <span className="text-primary">{this.props.workout.duration} mins</span></div>
           </div>
-          <div>
-            <p>Type: {this.props.workout.type}</p>
-            <p>Duration: {this.props.workout.duration} mins</p>
-          </div>
+          <Button className="details-edit-button" color="primary" onClick={this.showEditWorkoutModal}>Edit</Button>
         </ListGroupItem>
         <div className="row row-cols-1 row-cols-md-3 mt-4">
         {
@@ -37,21 +37,22 @@ class WorkoutDetails extends React.Component {
                 <Card className="card h-100">
                   <CardHeader>
                     <CardTitle className="d-flex justify-content-between">
-                      <h4>{exercise.exercise.name}</h4>
-                      <p className="text-primary">{exercise.exercise.muscleGroup}</p>
+                      <div className="fs-large">{exercise.exercise.name}</div>
+                      <div className="text-primary">{exercise.exercise.muscleGroup}</div>
                     </CardTitle>
                   </CardHeader>
                   <CardBody>
-                    <CardSubtitle className="text-primary mb-1">
-                      <span className="mr-3">Reps: {exercise.reps}</span>
-                      <span>Sets: {exercise.sets}</span>
-                      <p>Weight: {exercise.weight}</p>
+                    <CardSubtitle className="mb-3">
+                      <span className="mr-3">Reps: <span className="text-primary">{exercise.reps}</span></span>
+                      <span>Sets: <span className="text-primary">{exercise.sets}</span></span>
+                      <div>Weight: <span className="text-primary">{exercise.weight}</span></div>
                     </CardSubtitle>
-                    <CardText>{exercise.exercise.description}</CardText>
+                    <CardText className="text-muted">{exercise.exercise.description}</CardText>
                   </CardBody>
                   <CardFooter>
                     <Button
-                      color="secondary"
+                      className="float-right"
+                      color="primary"
                       onClick={() => this.props.showEditWorkoutExerciseModal({
                         workoutId: this.props.workout._id,
                         workoutExercise: exercise
