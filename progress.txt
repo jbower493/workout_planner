@@ -1,3 +1,7 @@
-Finished all functionality now.
+1 - pressing delete workout deletes the first one instead of the one clicked
 
-Next job is to learn redux or context and make a branch using either (try redux first)
+2 - need to change initial state of workout type to be Upper body. Think its done..
+
+
+5f93a9ffc07157a952d529ee", name: "Lower"
+5f93bab54de41aab5dad1662", name: "Upper

@@ -33,7 +33,7 @@ class App extends React.Component {
     return (
       <div className="app">
         <AppNavbar className="nav" />
-        <div class="body">
+        <div className="body">
           <Container>
             {content}
           </Container>

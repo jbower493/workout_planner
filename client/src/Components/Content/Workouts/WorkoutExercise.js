@@ -16,7 +16,7 @@ const WorkoutExercise = (props) => {
   if(props.fetching && removing) {
     button = <Spinner size="sm" color="secondary" />
   } else {
-    button = <Button color="danger" onClick={removeWorkoutExercise}>Remove from workout</Button>;
+    button = <Button color="danger" onClick={removeWorkoutExercise}>Remove</Button>;
   }
 
   return (

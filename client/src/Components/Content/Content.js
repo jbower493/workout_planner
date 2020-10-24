@@ -204,7 +204,7 @@ class Content extends React.Component {
     this.setState({ fetching: true });
     Axios({
       method: 'DELETE',
-      url: `${url}/workout/${this.state.workoutToDelete._id}`,
+      url: `${url}/workout/${this.state.workoutToDelete}`,
       withCredentials: true
     })
       .then(res => {

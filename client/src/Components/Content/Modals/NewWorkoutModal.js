@@ -8,7 +8,7 @@ class NewWorkoutModal extends React.Component {
     this.state = {
       name: '',
       duration: '',
-      type: ''
+      type: 'Upper body'
     };
     this.setName = this.setName.bind(this);
     this.setDuration = this.setDuration.bind(this);
