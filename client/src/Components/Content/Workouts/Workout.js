@@ -38,7 +38,7 @@ const Workout = (props) => {
             <div className="workout-type-holder">
               <div>Type: <span className="workout-type text-primary">{props.workout.type}</span></div>
             </div>
-            <div className="exercises-dropdown pointer" onClick={toggle}>Exercises <MdExpandMore /></div>
+            <div className="exercises-dropdown pointer mt-2" onClick={toggle}>Exercises <MdExpandMore className="scale-1-and-half" /></div>
           </div>
           <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown}>
             <DropdownToggle

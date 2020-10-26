@@ -32,16 +32,16 @@ const EditWorkoutExerciseModal = (props) => {
         </ModalHeader>
         <ModalBody>
           <Form>
-            <FormGroup>
-              <Label>Reps</Label>
+            <FormGroup className="mb-2">
+              <Label className="mb-0">Reps</Label>
               <Input type="number" value={reps} onChange={e => setReps(e.target.value)} />
             </FormGroup>
-            <FormGroup>
-              <Label>Sets</Label>
+            <FormGroup className="mb-2">
+              <Label className="mb-0">Sets</Label>
               <Input type="number" value={sets} onChange={e => setSets(e.target.value)} />
             </FormGroup>
-            <FormGroup>
-              <Label>Weight</Label>
+            <FormGroup className="mb-2">
+              <Label className="mb-0">Weight</Label>
               <Input type="text" value={weight} onChange={e => setWeight(e.target.value)} />
             </FormGroup>
           </Form>

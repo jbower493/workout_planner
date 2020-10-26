@@ -51,16 +51,16 @@ class NewWorkoutModal extends React.Component {
           <ModalHeader>New Workout</ModalHeader>
           <ModalBody>
             <Form>
-              <FormGroup>
-                <Label>Name</Label>
+              <FormGroup className="mb-2">
+                <Label className="mb-0">Name</Label>
                 <Input type="text" placeholder="Name" onChange={this.setName} />
               </FormGroup>
-              <FormGroup>
-                <Label>Duration</Label>
+              <FormGroup className="mb-2">
+                <Label className="mb-0">Duration</Label>
                 <Input type="text" placeholder="Duration" onChange={this.setDuration} />
               </FormGroup>
-              <FormGroup>
-                <Label>Type</Label>
+              <FormGroup className="mb-2">
+                <Label className="mb-0">Type</Label>
                 <Input type="select" onChange={this.setType}>
                   <option>Upper body</option>
                   <option>Lower body</option>

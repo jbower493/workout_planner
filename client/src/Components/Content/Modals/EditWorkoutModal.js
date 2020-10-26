@@ -29,17 +29,23 @@ const EditWorkoutModal = (props) => {
         <ModalHeader>Edit Workout</ModalHeader>
         <ModalBody>
           <Form>
-            <FormGroup>
-              <Label>Name</Label>
+            <FormGroup className="mb-2">
+              <Label className="mb-0">Name</Label>
               <Input type="text" value={name} onChange={e => setName(e.target.value)} />
             </FormGroup>
-            <FormGroup>
-              <Label>Duration</Label>
+            <FormGroup className="mb-2">
+              <Label className="mb-0">Duration</Label>
               <Input type="text" value={duration} onChange={e => setDuration(e.target.value)} />
             </FormGroup>
-            <FormGroup>
-              <Label>Type</Label>
-              <Input type="text" value={type} onChange={e => setType(e.target.value)} />
+            <FormGroup className="mb-2">
+              <Label className="mb-0">Type</Label>
+              <Input type="select" onChange={e => setType(e.target.value)}>
+                <option>Upper body</option>
+                <option>Lower body</option>
+                <option>Cardio</option>
+                <option>Flexibility</option>
+                <option>All round</option>
+              </Input>
             </FormGroup>
           </Form>
         </ModalBody>

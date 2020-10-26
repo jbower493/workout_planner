@@ -27,6 +27,10 @@ footer {
   font-size: 1.35rem;
 }
 
+.scale-1-and-half {
+  transform: scale(1.5);
+}
+
 .scale-2 {
   transform: scale(2);
 }
@@ -102,18 +106,15 @@ footer {
     width: fit-content;
   }
 
-  .new-buttons {
-    display: flex;
+  .button-holder {
     flex-direction: column;
   }
 
-  .top-new-button {
-    margin-bottom: 10px;
-    width: 100%;
+  .toggle-lists {
+    margin-top: 20px;
   }
 
-  .toggle-lists {
-    flex: 1;
+  .back-button-container {
     text-align: right;
   }
 }

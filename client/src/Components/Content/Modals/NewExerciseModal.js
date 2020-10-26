@@ -51,16 +51,16 @@ class NewExerciseModal extends React.Component {
           <ModalHeader>New exercise</ModalHeader>
           <ModalBody>
             <Form>
-              <FormGroup>
-                <Label>Name</Label>
+              <FormGroup className="mb-2">
+                <Label className="mb-0">Name</Label>
                 <Input type="text" placeholder="Name" onChange={this.setName} />
               </FormGroup>
-              <FormGroup>
-                <Label>Description</Label>
+              <FormGroup className="mb-2">
+                <Label className="mb-0">Description</Label>
                 <Input type="text" placeholder="Description" onChange={this.setDescription} />
               </FormGroup>
-              <FormGroup>
-                <Label>Muscle Group</Label>
+              <FormGroup className="mb-2">
+                <Label className="mb-0">Muscle Group</Label>
                 <Input type="text" placeholder="Muscle group" onChange={this.setMuscleGroup} />
               </FormGroup>
             </Form>

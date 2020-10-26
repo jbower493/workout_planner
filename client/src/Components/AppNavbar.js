@@ -16,6 +16,7 @@ import {
 } from 'reactstrap';
 
 const AppNavbar = (props) => {
+  
   let button;
   if(!props.loading) {
     button = <NavLink className="logout-button d-flex align-items-center" onClick={props.logout} >Logout<MdPerson className="ml-1" /></NavLink>;
